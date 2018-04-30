@@ -4,39 +4,17 @@ import java.util.Random;
 
 public class Board {
 
-
-    //TODO: Change setMove step to be more efficient, not creating the loops.
-    // Size of the board.
     public static final int SIZE = 64;
 
-    //TODO: Change #Squares.
-    // Probability from 100
-    public static final int FREEZE_CHANCE = 5;
-    public static final int BACKWARD_CHANCE = 5;
-    public static final int SNAKE_LADDER_CHANCE = 20;
 
     private Square[] squares;
     private Random random = new Random();
 
-    public Board() {
-        squares = new Square[SIZE];
-        for(int i = 1; i < squares.length -1; i++) {
-            Square.SquareBuilder sb = new Square.SquareBuilder(i);
-            if(chanceOf100(FREEZE_CHANCE)) {
-                sb = sb.setFreeze();
-            } else if(chanceOf100(BACKWARD_CHANCE)) {
-                sb = sb.setBackward();
-            } else if(chanceOf100(SNAKE_LADDER_CHANCE)) {
-                if(chanceOf100(50)) {
-                    sb = sb.snakeLadder(-(random.nextInt(i)+1));
-                } else {
-                    sb.snakeLadder(random.nextInt(SIZE-i-1));
-                }
-            }
-            squares[i] = sb.build();
+    private Board(Square.SquareBuilder sb[]) {
+        squares = new Square[sb.length];
+        for(int i=0; i<sb.length; i++) {
+            squares[i] = sb[i].build();
         }
-        squares[0] = new Square.SquareBuilder(0).build();
-        squares[squares.length - 1] = new Square.SquareBuilder(squares.length-1).setGoal().build();
     }
 
     public void addPiece(Piece piece, int pos) {
@@ -65,24 +43,174 @@ public class Board {
     }
 
     public boolean pieceIsAtGoal(Piece piece) {
-        return squares[getPiecePosition(piece)].isGoal();
+        return squares[getPiecePosition(piece)].getSquareStatus() == Square.GOAL_SQUARE;
     }
 
     public boolean isOnBackwardSquare(Piece piece) {
-        return squares[getPiecePosition(piece)].isBackward();
+        return squares[getPiecePosition(piece)].getSquareStatus() == Square.BACKWARD_SQUARE;
     }
 
     public boolean isOnFreezeSquare(Piece piece) {
-        return squares[getPiecePosition(piece)].isFreeze();
+        return squares[getPiecePosition(piece)].getSquareStatus() == Square.FREEZE_SQUARE;
+    }
+
+    public boolean isOnSnakeSquare(Piece piece) {
+        return squares[getPiecePosition(piece)].getSquareStatus() == Square.SNAKE_SQUARE;
+    }
+
+    public boolean isOnLadderSquare(Piece piece) {
+        return squares[getPiecePosition(piece)].getSquareStatus() == Square.LADDER_SQUARE;
     }
 
     public int snakeLadderSquare(Piece piece) {
         return squares[getPiecePosition(piece)].getMoveSteps();
     }
 
-    private boolean chanceOf100(int chance) {
-        int result = random.nextInt(100);
-        return result < chance;
+    public static class BoardBuilder {
+
+        private Square.SquareBuilder sb[];
+        private int limit, size;
+        private int ladder, snake, backward, freeze;
+        private boolean occupied[];
+
+        private Random random = new Random();
+
+        public BoardBuilder() {
+            this(Board.SIZE);
+        }
+
+        public BoardBuilder(int size) {
+            if(size < Die.MAX_FACE+2) {
+                throw new IllegalArgumentException("Unplayable Game!");
+            }
+            sb = new Square.SquareBuilder[size];
+            for(int i=0; i<size; i++) {
+                sb[i] = new Square.SquareBuilder(i);
+            }
+            limit = (int) ((size-2)/2.0);
+            occupied = new boolean[size];
+
+            sb[size-1] = sb[size-1].setGoal();
+            occupied[size-1] = true;
+            occupied[0] = true;
+            this.size = size;
+        }
+
+        public BoardBuilder ladder(int amount) {
+            check(amount*2);
+            ladder += amount;
+            return this;
+        }
+
+        public BoardBuilder snake(int amount) {
+            check(amount*2);
+            snake += amount;
+            return this;
+        }
+
+        public BoardBuilder backward(int amount) {
+            check(amount);
+            backward += amount;
+            return this;
+        }
+
+        public BoardBuilder freeze(int amount) {
+            check(amount);
+            freeze += amount;
+            return this;
+        }
+
+        public Board build() {
+
+            // Create Ladder
+            for(int i=0; i<ladder; i++) {
+                int src = random.nextInt(size-2) + 1;
+                // Replace if more efficient algorithm is found.
+                while(true) {
+                    int dest = randomAvailableSquare(src+1,size-1);
+                    if(dest >= 0) {
+                        int move = dest-src;
+                        sb[src] = sb[src].snakeLadder(move);
+                        occupied[src] = true;
+                        occupied[dest] = true;
+                        break;
+                    } else {
+                        src--;
+                    }
+                }
+            }
+
+            // Create Snake
+            for(int i=0; i<snake; i++) {
+                int src = random.nextInt(size-2) + 1;
+                while(true) {
+                    int dest = randomAvailableSquare(1,src-1);
+                    if(dest >= 0) {
+                        int move = dest-src;
+                        sb[src] = sb[src].snakeLadder(move);
+                        occupied[src] = true;
+                        occupied[dest] = true;
+                        break;
+                    } else {
+                        src++;
+                    }
+                }
+            }
+
+            // Create Backward Square
+            for(int i=0; i<backward; i++) {
+                int res = randomAvailableSquare(1,size-1);
+                sb[res] = sb[res].setBackward();
+                occupied[res] = true;
+            }
+
+            // Create Freeze Square
+            for(int i=0; i<freeze; i++) {
+                int res = randomAvailableSquare(1,size-1);
+                sb[res] = sb[res].setFreeze();
+                occupied[res] = true;
+            }
+
+            return new Board(sb);
+        }
+
+        private void check(int amount) {
+            if(limit - amount < 0) {
+                throw new IllegalStateException("Setting reach above the limit!");
+            } else {
+                limit -= amount;
+            }
+        }
+
+        private int randomAvailableSquare(int lowerBound, int upperBound) {
+            int available = getAvailableAmount(lowerBound,upperBound);
+            if(available == 0) {
+                return -1;
+            }
+
+            int result = random.nextInt(available);
+
+            for(int i=lowerBound; i<upperBound; i++) {
+                if(occupied[i]) {
+                    continue;
+                }
+                if(result == 0) {
+                    return i;
+                }
+                result--;
+            }
+            return upperBound;
+        }
+
+        private int getAvailableAmount(int lowerBound, int upperBound) {
+            int available = 0;
+            for(int i=lowerBound; i<=upperBound; i++) {
+                if(!occupied[i]) {
+                    available++;
+                }
+            }
+            return available;
+        }
     }
 
 }

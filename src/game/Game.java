@@ -5,11 +5,9 @@ public class Game {
     //TODO: May change to MVP.
     private Player[] players;
     private Die die = new Die();
-    private Board board = new Board();
+    private Board board = new Board.BoardBuilder().build();
 
     private int currentPlayerIndex;
-
-    // TODO: Change Game into State machine Design.
 
     private State state;
 
@@ -104,7 +102,11 @@ public class Game {
     private class InitState extends State {
 
         public InitState() {
-            super(new GameData());
+            this(new GameData());
+        }
+
+        public InitState(GameData now) {
+            super(now);
         }
 
         @Override
@@ -292,13 +294,14 @@ public class Game {
         public void doAction() {
             super.doAction();
             data.addData("state","check");
-            if(board.pieceIsAtGoal(currentPlayerPiece())) {
+            Piece current = currentPlayerPiece();
+            if(board.pieceIsAtGoal(current)) {
                 next = new GameEndedState(data);
-            } else if(board.isOnFreezeSquare(currentPlayerPiece())) {
+            } else if(board.isOnFreezeSquare(current)) {
                 next = new SetFreezeState(data);
-            } else if(board.snakeLadderSquare(currentPlayerPiece()) != 0) {
+            } else if(board.isOnSnakeSquare(current) || board.isOnLadderSquare(current)) {
                 next = new SnakeLadderState(data);
-            } else if(board.isOnBackwardSquare(currentPlayerPiece())) {
+            } else if(board.isOnBackwardSquare(current)) {
                 next = new BackwardRollState(data);
             } else if(oldData.get("setMove").equals(6)) {
                 next = new LuckyRollState(data);

@@ -42,4 +42,8 @@ public class Player {
         return freeze;
     }
 
+    public Color getPieceColor() {
+        return getPiece().getColor();
+    }
+
 }

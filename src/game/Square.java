@@ -3,159 +3,101 @@ package game;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * The square in the game.Board.
- * @author Pawat Nakpiphatkul
- * @author Noppawan Kulchol
- * @author Kanchanok Kannee
- */
 public class Square {
+
+    public static final int NORMAL_SQUARE = 0;
+    public static final int LADDER_SQUARE = 1;
+    public static final int SNAKE_SQUARE = 2;
+    public static final int FREEZE_SQUARE = 3;
+    public static final int BACKWARD_SQUARE = 4;
+    public static final int GOAL_SQUARE = 5;
 
     private List<Piece> pieces;
     private int number;
     private int moveSteps;
-    private boolean goal;
-    private boolean freeze;
-    private boolean backward;
+    private int status;
 
-    /**
-     * Constructor of game.Square class.
-     * @param number is the square number.
-     */
-    private Square(int number, int moveSteps, boolean goal, boolean freeze, boolean backward) {
+    private Square(int number, int status, int moveSteps) {
         this.number = number;
         this.moveSteps = moveSteps;
-        this.goal = goal;
-        this.freeze = freeze;
-        this.backward = backward;
+        this.status = status;
         pieces = new ArrayList<>();
     }
 
-    /**
-     * Adds piece to this square.
-     * @param piece is the piece to be added.
-     */
     public void addPiece(Piece piece) {
         if(!hasPiece(piece)) {
             pieces.add(piece);
         }
     }
 
-    /**
-     * Remove piece from this square.
-     * @param piece is the piece to be removed.
-     */
     public void removePiece(Piece piece) {
         pieces.remove(piece);
     }
 
-    /**
-     * Checks that the square contains a piece.
-     * @param piece is the piece to be checked.
-     * @return true if the piece is contains in this square, otherwise false.
-     */
     public boolean hasPiece(Piece piece) {
         return pieces.contains(piece);
     }
 
-    /**
-     * Checks that this square is a goal.
-     * @return true if this square is the goal, otherwise false.
-     */
-    public boolean isGoal() {
-        return goal;
-    }
-
-    /**
-     * Get the number of this square.
-     * @return number of this square.
-     */
     public int getNumber() {
         return number;
     }
 
-    /**
-     * Get the snakeLadder of this square.
-     * @return snakeLadder of this square.
-     */
     public int getMoveSteps() {
         return moveSteps;
     }
 
-    /**
-     * Checks that this square is a backward square.
-     * @return true if this is a backward square, otherwise false.
-     */
-    public boolean isBackward() {
-        return backward;
+    public int getSquareStatus() {
+        return status;
     }
 
-    /**
-     * Checks that this square is a freeze square.
-     * @return true if this is a freeze square, otherwise false.
-     */
-    public boolean isFreeze() {
-        return freeze;
-    }
-
-    /**
-     * Class for build the Square.
-     */
     public static class SquareBuilder{
         private int number;
 
         // Optional
         private int moveSteps = 0;
-        private boolean goal = false;
-        private boolean freeze = false;
-        private boolean backward = false;
+        private int status = Square.NORMAL_SQUARE;
 
-        /**
-         * Constructor of SquareNumber.
-         * @param number is the number of the square to build.
-         */
         public SquareBuilder(int number) {
             this.number = number;
         }
 
-        /**
-         * Set the snakeLadder to the square to build.
-         */
         public SquareBuilder snakeLadder(int moveSteps) {
+            check();
             this.moveSteps = moveSteps;
+            if(moveSteps > 0) {
+                status = Square.LADDER_SQUARE;
+            } else {
+                status = Square.SNAKE_SQUARE;
+            }
             return this;
         }
 
-        /**
-         * Set the goal to the square to build.
-         */
         public SquareBuilder setGoal() {
-            this.goal = true;
+            check();
+            status = Square.GOAL_SQUARE;
             return this;
         }
 
-        /**
-         * Set the freeze to the square to build.
-         */
         public SquareBuilder setFreeze() {
-            this.freeze = true;
+            check();
+            status = Square.FREEZE_SQUARE;
             return this;
         }
 
-        /**
-         * Set the backward to the square to build.
-         */
         public SquareBuilder setBackward() {
-            this.backward = true;
+            check();
+            status = Square.BACKWARD_SQUARE;
             return this;
         }
 
-        /**
-         * Build a square with desired properties.
-         * @return a new square.
-         */
         public Square build() {
-            return new Square(number,moveSteps,goal,freeze,backward);
+            return new Square(number,status,moveSteps);
+        }
+
+        private void check() {
+            if(status != Square.NORMAL_SQUARE) {
+                throw new IllegalStateException("This square was assigned.");
+            }
         }
 
     }
