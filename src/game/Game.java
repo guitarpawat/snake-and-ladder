@@ -1,5 +1,7 @@
 package game;
 
+import java.util.Arrays;
+
 public class Game {
 
     //TODO: May change to MVP.
@@ -66,6 +68,8 @@ public class Game {
     private void switchPlayer() {
         currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
     }
+
+
 
     private abstract class State {
         protected GameData oldData;

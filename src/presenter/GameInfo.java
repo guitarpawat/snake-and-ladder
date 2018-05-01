@@ -6,12 +6,13 @@ import game.Player;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GameInfo {
-    Board board;
-    Game game;
-    Player[] players;
+    private Board board;
+    private Game game;
+    private Player[] players;
 
     private GameInfo(Player[] players,Board board, Game game) {
         this.board = board;
@@ -23,12 +24,8 @@ public class GameInfo {
         return board.getSquaresStatus();
     }
 
-    public String getPlayerName(int p) {
-        return players[p].getName();
-    }
-
-    public Color getPlayerColor(int p) {
-        return players[p].getPieceColor();
+    public Player[] getPlayers() {
+        return Arrays.copyOf(players,players.length);
     }
 
     public Game getGame() {
