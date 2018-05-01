@@ -66,6 +66,18 @@ public class Board {
         return squares[getPiecePosition(piece)].getMoveSteps();
     }
 
+    public int getSquareStatus(Piece piece) {
+        return squares[getPiecePosition(piece)].getSquareStatus();
+    }
+
+    public int[] getSquaresStatus() {
+        int ret[] = new int[squares.length];
+        for(int i=0; i<squares.length; i++) {
+            ret[i] = squares[i].getSquareStatus();
+        }
+        return ret;
+    }
+
     public static class BoardBuilder {
 
         private Square.SquareBuilder sb[];

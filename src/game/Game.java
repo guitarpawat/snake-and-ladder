@@ -29,6 +29,12 @@ public class Game {
         state = new InitState();
     }
 
+    public Game(Player[] players, Board board) {
+        this.players = players;
+        this.board = board;
+        state = new InitState();
+    }
+
     public Player currentPlayer() {
         return players[currentPlayerIndex];
     }
