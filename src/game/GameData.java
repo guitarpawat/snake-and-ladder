@@ -13,6 +13,7 @@ public class GameData {
     }
 
     public void addData(String key, Object info) {
+        if(info == null) return;
         if(data.containsKey(key)) {
             throw new IllegalArgumentException("This key was already added.");
         }

@@ -66,8 +66,16 @@ public class Board {
         return squares[getPiecePosition(piece)].getMoveSteps();
     }
 
+    public int snakeLadderSquare(int pos) {
+        return squares[pos].getMoveSteps();
+    }
+
     public int getSquareStatus(Piece piece) {
         return squares[getPiecePosition(piece)].getSquareStatus();
+    }
+
+    public int getSquareStatus(int pos) {
+        return squares[pos].getSquareStatus();
     }
 
     public int[] getSquaresStatus() {

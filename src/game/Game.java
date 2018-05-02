@@ -41,8 +41,20 @@ public class Game {
         return players[currentPlayerIndex];
     }
 
-    public GameData getGameStateData() {
+    public String getActionDescription() {
+        return state.getDescription();
+    }
+
+    public void doAction() {
+        state.doAction();
+    }
+
+    public GameData getActionData() {
         return state.getData();
+    }
+
+    public void finishedAction() {
+        state.toNextState();
     }
 
     public String currentPlayerName() {
@@ -107,6 +119,8 @@ public class Game {
             }
             done = true;
         }
+
+        public abstract String getDescription();
     }
 
     private class InitState extends State {
@@ -123,7 +137,13 @@ public class Game {
         public void doAction() {
             super.doAction();
             data.addData("state","init");
+            data.addData("player",currentPlayer());
             next = new StartTurnState(data);
+        }
+
+        @Override
+        public String getDescription() {
+            return "init";
         }
 
         @Override
@@ -144,12 +164,18 @@ public class Game {
         @Override
         public void doAction() {
             super.doAction();
-            data.addData("state","start");
+            data.addData("state","start_turn");
+            data.addData("player",currentPlayer());
             if(currentPlayer().isFreeze()) {
                 next = new UnFreezeState(data);
             } else {
                 next = new DefaultRollState(data);
             }
+        }
+
+        @Override
+        public String getDescription() {
+            return "start_turn";
         }
     }
 
@@ -165,6 +191,7 @@ public class Game {
 
         public void setMove(int step) {
             data.addData("move",step);
+            data.addData("player",currentPlayer());
         }
     }
 
@@ -189,6 +216,11 @@ public class Game {
             setMove(board.snakeLadderSquare(currentPlayerPiece()));
             next = new MovePieceState(data);
         }
+
+        @Override
+        public String getDescription() {
+            return "snake_ladder";
+        }
     }
 
     private abstract class RollableState extends MovableState {
@@ -208,10 +240,11 @@ public class Game {
         public int rollOrDataDefault() {
             if(data.hasKey("face")) {
                 int face = (Integer) data.get("face");
-                data.addData("face",face);
                 return face;
             }
-            return roll();
+            int face = roll();
+            data.addData("face",face);
+            return face;
         }
 
     }
@@ -233,6 +266,11 @@ public class Game {
             setMove(face);
             next = new MovePieceState(data);
         }
+
+        @Override
+        public String getDescription() {
+            return "default_roll";
+        }
     }
 
     private class LuckyRollState extends RollableState {
@@ -251,6 +289,11 @@ public class Game {
             int face = rollOrDataDefault();
             setMove(face);
             next = new MovePieceState(data);
+        }
+
+        @Override
+        public String getDescription() {
+            return "lucky_roll";
         }
     }
 
@@ -271,6 +314,11 @@ public class Game {
             setMove(-face);
             next = new MovePieceState(data);
         }
+
+        @Override
+        public String getDescription() {
+            return "backward_roll";
+        }
     }
 
     private class MovePieceState extends State {
@@ -287,7 +335,14 @@ public class Game {
             super.doAction();
             currentPlayerMovePiece((Integer) oldData.get("move"));
             data.addData("state","move");
+            data.addData("player",currentPlayer());
+            data.addData("face",oldData.get("face"));
             next = new CheckState(data);
+        }
+
+        @Override
+        public String getDescription() {
+            return "move";
         }
     }
 
@@ -304,6 +359,7 @@ public class Game {
         public void doAction() {
             super.doAction();
             data.addData("state","check");
+            data.addData("player",currentPlayer());
             Piece current = currentPlayerPiece();
             if(board.pieceIsAtGoal(current)) {
                 next = new GameEndedState(data);
@@ -313,11 +369,19 @@ public class Game {
                 next = new SnakeLadderState(data);
             } else if(board.isOnBackwardSquare(current)) {
                 next = new BackwardRollState(data);
-            } else if(oldData.get("setMove").equals(6)) {
-                next = new LuckyRollState(data);
-            } else {
+            } else if(oldData.get("face") != null) {
+                if(oldData.get("face").equals(6)) {
+                    next = new LuckyRollState(data);
+                }
+            }
+            if(next == null) {
                 next = new SwitchPlayerState(data);
             }
+        }
+
+        @Override
+        public String getDescription() {
+            return "check";
         }
     }
 
@@ -335,7 +399,13 @@ public class Game {
             super.doAction();
             data.addData("state","set_freeze");
             currentPlayer().setFreeze(true);
+            data.addData("player",currentPlayer());
             next = new SwitchPlayerState(data);
+        }
+
+        @Override
+        public String getDescription() {
+            return "set_freeze";
         }
     }
 
@@ -353,7 +423,13 @@ public class Game {
             super.doAction();
             data.addData("state","un_freeze");
             currentPlayer().setFreeze(false);
+            data.addData("player",currentPlayer());
             next = new SwitchPlayerState(data);
+        }
+
+        @Override
+        public String getDescription() {
+            return "un_freeze";
         }
     }
 
@@ -371,7 +447,13 @@ public class Game {
             super.doAction();
             data.addData("state","switch");
             switchPlayer();
+            data.addData("player",currentPlayer());
             next = new StartTurnState(data);
+        }
+
+        @Override
+        public String getDescription() {
+            return "switch";
         }
     }
 
@@ -388,6 +470,12 @@ public class Game {
         public void doAction() {
             super.doAction();
             data.addData("state","ended");
+            data.addData("player",currentPlayer());
+        }
+
+        @Override
+        public String getDescription() {
+            return "ended";
         }
 
         @Override

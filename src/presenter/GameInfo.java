@@ -5,9 +5,7 @@ import game.Game;
 import game.Player;
 import javafx.scene.paint.Color;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class GameInfo {
     private Board board;
@@ -31,39 +29,61 @@ public class GameInfo {
     public Game getGame() {
         return game;
     }
+    
+    public Board getBoard() {
+        return board;
+    }
 
-    public static class GameCreater {
+    public static class GameCreator {
         List<Player> players;
         Board.BoardBuilder boardBuilder;
 
-        public GameCreater() {
+        public GameCreator() {
             players = new ArrayList<>();
             boardBuilder = new Board.BoardBuilder(Board.SIZE);
         }
 
-        public GameCreater addPlayer(Player p) {
+        public GameCreator addPlayer(Player p) {
             players.add(p);
             return this;
         }
 
-        public GameCreater addPlayer(String name) {
+        public GameCreator addPlayer(String name) {
             addPlayer(new Player(name));
             return this;
         }
 
-        public GameCreater addPlayer(String name, Color color) {
-            addPlayer(new Player(name,color));
+        public GameCreator addPlayer(String name, Color color) {
+            return addPlayer(new Player(name,color));
+        }
+
+        public GameCreator ladder(int amount) {
+            boardBuilder = boardBuilder.ladder(amount);
             return this;
         }
 
-        public Board.BoardBuilder getBoardBuilder() {
-            return boardBuilder;
+        public GameCreator snake(int amount) {
+            boardBuilder = boardBuilder.snake(amount);
+            return this;
+        }
+
+        public GameCreator backward(int amount) {
+            boardBuilder = boardBuilder.backward(amount);
+            return this;
+        }
+
+        public GameCreator freeze(int amount) {
+            boardBuilder = boardBuilder.freeze(amount);
+            return this;
         }
 
         public GameInfo build() {
             Board board = boardBuilder.build();
             Player[] players = new Player[this.players.size()];
             this.players.toArray(players);
+            for(Player p: this.players) {
+                board.addPiece(p.getPiece(),0);
+            }
             Game game = new Game(players,board);
             return new GameInfo(players,board,game);
         }
