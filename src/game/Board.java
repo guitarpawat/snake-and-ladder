@@ -144,11 +144,11 @@ public class Board {
 
             // Create Ladder
             for(int i=0; i<ladder; i++) {
-                int src = random.nextInt(size-2) + 1;
+                int src = randomAvailableSquare(1,size-2);
                 // Replace if more efficient algorithm is found.
                 while(true) {
-                    int dest = randomAvailableSquare(src+1,size-1);
-                    if(dest >= 0) {
+                    int dest = randomAvailableSquare(src+1,size-2);
+                    if(dest > 0) {
                         int move = dest-src;
                         sb[src] = sb[src].snakeLadder(move);
                         occupied[src] = true;
@@ -162,10 +162,10 @@ public class Board {
 
             // Create Snake
             for(int i=0; i<snake; i++) {
-                int src = random.nextInt(size-2) + 1;
+                int src = randomAvailableSquare(1,size-2);
                 while(true) {
                     int dest = randomAvailableSquare(1,src-1);
-                    if(dest >= 0) {
+                    if(dest > 0) {
                         int move = dest-src;
                         sb[src] = sb[src].snakeLadder(move);
                         occupied[src] = true;
@@ -179,14 +179,14 @@ public class Board {
 
             // Create Backward Square
             for(int i=0; i<backward; i++) {
-                int res = randomAvailableSquare(1,size-1);
+                int res = randomAvailableSquare(1,size-2);
                 sb[res] = sb[res].setBackward();
                 occupied[res] = true;
             }
 
             // Create Freeze Square
             for(int i=0; i<freeze; i++) {
-                int res = randomAvailableSquare(1,size-1);
+                int res = randomAvailableSquare(1,size-2);
                 sb[res] = sb[res].setFreeze();
                 occupied[res] = true;
             }
@@ -204,7 +204,7 @@ public class Board {
 
         private int randomAvailableSquare(int lowerBound, int upperBound) {
             int available = getAvailableAmount(lowerBound,upperBound);
-            if(available == 0) {
+            if(available <= 0) {
                 return -1;
             }
 

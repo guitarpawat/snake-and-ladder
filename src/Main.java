@@ -15,6 +15,6 @@ public class Main {
     }
 
     public static int randInt() {
-        return random.nextInt(5);
+        return random.nextInt(5)+1;
     }
 }
