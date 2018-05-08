@@ -49,14 +49,14 @@ public class ConsoleUI implements GameUI {
 
     @Override
     public void roll() {
-        System.out.println("Press enter to roll the dice...");
+        System.out.print("Press enter to roll the dice...");
         scanner.nextLine();
     }
 
     @Override
     public void delay() {
         try {
-            Thread.sleep(321);
+            Thread.sleep(0);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -65,6 +65,25 @@ public class ConsoleUI implements GameUI {
     @Override
     public void setMessage(String message) {
         System.out.println(message);
+    }
+
+    @Override
+    public void gameEnded(Player winner) {
+        System.out.println(winner.getName()+" Wins!");
+        while(true) {
+            System.out.print("[n]ew game, [r]eplay, [q]uit : ");
+            String in = scanner.nextLine();
+            if(in.equalsIgnoreCase("n")) {
+                //TODO
+                break;
+            } else if(in.equalsIgnoreCase("r")) {
+                currentPlayer = null;
+                presenter.replay();
+                break;
+            } else if(in.equalsIgnoreCase("q")) {
+                System.exit(0);
+            }
+        }
     }
 
     private void render() {

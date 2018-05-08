@@ -46,4 +46,9 @@ public class GraphicUI extends Application implements GameUI {
     public void setMessage(String message) {
 
     }
+
+    @Override
+    public void gameEnded(Player winner) {
+
+    }
 }

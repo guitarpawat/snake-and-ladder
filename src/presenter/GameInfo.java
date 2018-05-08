@@ -39,8 +39,12 @@ public class GameInfo {
         Board.BoardBuilder boardBuilder;
 
         public GameCreator() {
+            this(Board.SIZE);
+        }
+
+        public GameCreator(int size) {
             players = new ArrayList<>();
-            boardBuilder = new Board.BoardBuilder(Board.SIZE);
+            boardBuilder = new Board.BoardBuilder(size);
         }
 
         public GameCreator addPlayer(Player p) {

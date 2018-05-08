@@ -1,17 +1,20 @@
 package game;
 
-import java.util.Arrays;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
 public class Game {
 
-    //TODO: May change to MVP.
     private Player[] players;
     private Die die = new Die();
     private Board board = new Board.BoardBuilder().build();
-
     private int currentPlayerIndex;
-
     private State state;
+
+    // For replay
+    private List<Memento> mementos = new ArrayList<>();
+    private Iterator<Memento> mementoIterator = null;
+
 
     public Game(int person) {
         this(person,null);
@@ -47,6 +50,9 @@ public class Game {
 
     public void doAction() {
         state.doAction();
+        if(mementoIterator == null) {
+            mementos.add(new Memento(board,state.getData(),state.getDescription()));
+        }
     }
 
     public GameData getActionData() {
@@ -54,7 +60,21 @@ public class Game {
     }
 
     public void finishedAction() {
-        state.toNextState();
+        if(mementoIterator == null) {
+            state.toNextState();
+        } else if(mementoIterator.hasNext()) {
+            GameData oldData = state.getData();
+            state.toNextState();
+            Class nextState = state.getClass();
+            Memento nextMemento = mementoIterator.next();
+            try {
+                state = (State) nextState.getConstructor(Game.class,GameData.class,GameData.class).newInstance(this,oldData,nextMemento.getData());
+            } catch (InstantiationException|InvocationTargetException|IllegalAccessException|NoSuchMethodException e) {
+                try {
+                    state = (State) nextState.getConstructor(Game.class,GameData.class).newInstance(this,nextMemento.getData());
+                } catch (InstantiationException|InvocationTargetException|IllegalAccessException|NoSuchMethodException ex) {}
+            }
+        }
     }
 
     public String currentPlayerName() {
@@ -67,6 +87,11 @@ public class Game {
 
     public int currentPlayerPosition() {
         return board.getPiecePosition(currentPlayer().getPiece());
+    }
+
+    public void replay() {
+        state = new ReplayInitState();
+        state.doAction();
     }
 
     private int currentPlayerRollDice() {
@@ -87,7 +112,7 @@ public class Game {
         protected GameData oldData;
         protected GameData data;
         protected State next;
-        private boolean done = false;
+        protected boolean done = false;
 
         public State(GameData old) {
             this(old,new GameData());
@@ -103,7 +128,7 @@ public class Game {
         }
 
         public GameData getData() {
-            if(data == null) {
+            if(!done) {
                 throw new IllegalStateException("Must call doAction before getting data.");
             }
             return data;
@@ -118,6 +143,14 @@ public class Game {
                 throw new IllegalStateException("The action must do only once in each state.");
             }
             done = true;
+        }
+        
+        public boolean addDataOrDefault(String key, Object info) {
+            if(!data.hasKey(key)) {
+                data.addData(key, info);
+                return true;
+            }
+            return false;
         }
 
         public abstract String getDescription();
@@ -136,8 +169,9 @@ public class Game {
         @Override
         public void doAction() {
             super.doAction();
-            data.addData("state","init");
-            data.addData("player",currentPlayer());
+            addDataOrDefault("state","init");
+            addDataOrDefault("player",currentPlayer());
+            currentPlayerIndex = 0;
             next = new StartTurnState(data);
         }
 
@@ -164,8 +198,8 @@ public class Game {
         @Override
         public void doAction() {
             super.doAction();
-            data.addData("state","start_turn");
-            data.addData("player",currentPlayer());
+            addDataOrDefault("state","start_turn");
+            addDataOrDefault("player",currentPlayer());
             if(currentPlayer().isFreeze()) {
                 next = new UnFreezeState(data);
             } else {
@@ -190,8 +224,8 @@ public class Game {
         }
 
         public void setMove(int step) {
-            data.addData("move",step);
-            data.addData("player",currentPlayer());
+            addDataOrDefault("move",step);
+            addDataOrDefault("player",currentPlayer());
         }
     }
 
@@ -209,9 +243,9 @@ public class Game {
             super.doAction();
             int steps = board.snakeLadderSquare(currentPlayerPiece());
             if(steps > 0) {
-                data.addData("state","ladder");
+                addDataOrDefault("state","ladder");
             } else {
-                data.addData("state","snake");
+                addDataOrDefault("state","snake");
             }
             setMove(board.snakeLadderSquare(currentPlayerPiece()));
             next = new MovePieceState(data);
@@ -243,7 +277,7 @@ public class Game {
                 return face;
             }
             int face = roll();
-            data.addData("face",face);
+            addDataOrDefault("face",face);
             return face;
         }
 
@@ -261,7 +295,7 @@ public class Game {
         @Override
         public void doAction() {
             super.doAction();
-            data.addData("state","default_roll");
+            addDataOrDefault("state","default_roll");
             int face = rollOrDataDefault();
             setMove(face);
             next = new MovePieceState(data);
@@ -285,7 +319,7 @@ public class Game {
         @Override
         public void doAction() {
             super.doAction();
-            data.addData("state","lucky_roll");
+            addDataOrDefault("state","lucky_roll");
             int face = rollOrDataDefault();
             setMove(face);
             next = new MovePieceState(data);
@@ -309,7 +343,7 @@ public class Game {
         @Override
         public void doAction() {
             super.doAction();
-            data.addData("state","backward_roll");
+            addDataOrDefault("state","backward_roll");
             int face = rollOrDataDefault();
             setMove(-face);
             next = new MovePieceState(data);
@@ -334,9 +368,9 @@ public class Game {
         public void doAction() {
             super.doAction();
             currentPlayerMovePiece((Integer) oldData.get("move"));
-            data.addData("state","move");
-            data.addData("player",currentPlayer());
-            data.addData("face",oldData.get("face"));
+            addDataOrDefault("state","move");
+            addDataOrDefault("player",currentPlayer());
+            addDataOrDefault("face",oldData.get("face"));
             next = new CheckState(data);
         }
 
@@ -358,8 +392,8 @@ public class Game {
         @Override
         public void doAction() {
             super.doAction();
-            data.addData("state","check");
-            data.addData("player",currentPlayer());
+            addDataOrDefault("state","check");
+            addDataOrDefault("player",currentPlayer());
             Piece current = currentPlayerPiece();
             if(board.pieceIsAtGoal(current)) {
                 next = new GameEndedState(data);
@@ -397,9 +431,9 @@ public class Game {
         @Override
         public void doAction() {
             super.doAction();
-            data.addData("state","set_freeze");
+            addDataOrDefault("state","set_freeze");
             currentPlayer().setFreeze(true);
-            data.addData("player",currentPlayer());
+            addDataOrDefault("player",currentPlayer());
             next = new SwitchPlayerState(data);
         }
 
@@ -421,9 +455,9 @@ public class Game {
         @Override
         public void doAction() {
             super.doAction();
-            data.addData("state","un_freeze");
+            addDataOrDefault("state","un_freeze");
             currentPlayer().setFreeze(false);
-            data.addData("player",currentPlayer());
+            addDataOrDefault("player",currentPlayer());
             next = new SwitchPlayerState(data);
         }
 
@@ -445,9 +479,9 @@ public class Game {
         @Override
         public void doAction() {
             super.doAction();
-            data.addData("state","switch");
+            addDataOrDefault("state","switch");
             switchPlayer();
-            data.addData("player",currentPlayer());
+            addDataOrDefault("player",currentPlayer());
             next = new StartTurnState(data);
         }
 
@@ -469,8 +503,8 @@ public class Game {
         @Override
         public void doAction() {
             super.doAction();
-            data.addData("state","ended");
-            data.addData("player",currentPlayer());
+            addDataOrDefault("state","ended");
+            addDataOrDefault("player",currentPlayer());
         }
 
         @Override
@@ -483,4 +517,52 @@ public class Game {
             throw  new IllegalStateException("The game was ended.");
         }
     }
+
+    private class ReplayInitState extends State {
+
+        public ReplayInitState() {
+            super(null,null);
+        }
+
+        @Override
+        public void doAction() {
+            super.doAction();
+            mementoIterator = mementos.iterator();
+            for(Player p: players) {
+                board.movePiece(p.getPiece(),-board.getPiecePosition(p.getPiece()));
+            }
+            currentPlayerIndex = 0;
+            next = new InitState();
+        }
+
+        @Override
+        public String getDescription() {
+            return "replay";
+        }
+    }
+
+    private static class Memento {
+        private GameData data;
+        private Board board;
+        private String description;
+        private Memento(Board b, GameData g, String d) {
+            board = b;
+            data = g;
+            description = d;
+        }
+
+        public Board getBoard() {
+            return board;
+        }
+
+        public GameData getData() {
+            return data;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+    }
+
+
 }

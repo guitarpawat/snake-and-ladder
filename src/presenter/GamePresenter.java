@@ -21,8 +21,7 @@ public class GamePresenter {
     }
 
     public void start() {
-        ui.initRenderBoard(info.getBoardInfo(),info.getPlayers());
-        outer: while(true) {
+        while(true) {
             switch(game.getActionDescription()) {
                 case "default_roll":
                     ui.roll();
@@ -55,12 +54,13 @@ public class GamePresenter {
                     ui.reRenderBoard();
                     break;
                 case "ended":
-                    ui.setMessage(((Player)data.get("player")).getName()+" Wins!");
-                    break outer;
+                    ui.gameEnded((Player)data.get("player"));
+                    break;
                 case "switch":
                     ui.focusPlayer((Player)data.get("player"));
                     break;
                 case "init":
+                    ui.initRenderBoard(info.getBoardInfo(),info.getPlayers());
                     ui.setMessage("Current position: "+(info.getBoard().getPiecePosition(((Player)data.get("player")).getPiece())+1));
                     ui.focusPlayer((Player)data.get("player"));
                     break;
@@ -81,5 +81,9 @@ public class GamePresenter {
 
     public int getSquareMoves(int pos) {
         return info.getBoard().snakeLadderSquare(pos);
+    }
+
+    public void replay() {
+        game.replay();
     }
 }

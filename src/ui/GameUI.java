@@ -9,5 +9,6 @@ public interface GameUI {
     public void roll();
     public void delay();
     public void setMessage(String message);
+    public void gameEnded(Player winner);
 
 }
