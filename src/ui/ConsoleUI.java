@@ -56,7 +56,7 @@ public class ConsoleUI implements GameUI {
     @Override
     public void delay() {
         try {
-            Thread.sleep(0);
+            Thread.sleep(321);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -84,6 +84,11 @@ public class ConsoleUI implements GameUI {
                 System.exit(0);
             }
         }
+    }
+
+    @Override
+    public void diceFace(int face) {
+        System.out.println("Dice face: "+face);
     }
 
     private void render() {

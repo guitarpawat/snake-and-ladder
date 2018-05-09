@@ -46,7 +46,7 @@ public class GamePresenter {
 
             Map<String,Object> data = game.getActionData().getAll();
             if(data.containsKey("face") && !data.get("state").equals("move")) {
-                ui.setMessage("Dice face: "+data.get("face"));
+                ui.diceFace((Integer)data.get("face"));
             }
             switch((String)data.get("state")) {
                 case "move":

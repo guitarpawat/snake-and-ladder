@@ -10,5 +10,6 @@ public interface GameUI {
     public void delay();
     public void setMessage(String message);
     public void gameEnded(Player winner);
+    public void diceFace(int face);
 
 }

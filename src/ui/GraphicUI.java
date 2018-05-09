@@ -102,6 +102,11 @@ public class GraphicUI extends Application implements GameUI {
 
 	}
 
+	@Override
+	public void diceFace(int face) {
+
+	}
+
 	public static void main(String[] args) {
 		launch(args);
 	}
