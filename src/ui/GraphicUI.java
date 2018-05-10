@@ -103,16 +103,13 @@ public class GraphicUI extends Application implements GameUI {
 	}
 
 	public void initialize(){
+	    // Just for debugging!
+		creator = new GameInfo.GameCreator(36).addPlayer("Sept").addPlayer("Guitar").addPlayer("Mai")
+                .snake(2).ladder(2).backward(2).freeze(2);
 		endgameBG.setVisible(false);
 		newgameB.setVisible(false);
 		replayB.setVisible(false);
 		exitB.setVisible(false);
-//		 player = playerNum.getText();
-//		currentPlayer = player;
-		new Player(playerName.getText());
-		for (Player player : players) {
-			creator.addPlayer(player);
-		}
 		presenter = new GamePresenter(this,creator.build());
         presenter.start();
 	}
@@ -156,7 +153,7 @@ public class GraphicUI extends Application implements GameUI {
 	@Override
 	public void delay() {
 		try {
-            Thread.sleep(200);
+            Thread.sleep(0);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -173,7 +170,7 @@ public class GraphicUI extends Application implements GameUI {
 		newgameB.setVisible(true);
 		replayB.setVisible(true);
 		exitB.setVisible(true);
-		win.setText(winner.getName()+" Wins!");
+		setMessage(winner.getName()+" Wins!");
 	        while(true) {
 //	            System.out.print("[n]ew game, [r]eplay, [q]uit : ");
 //	            String in = scanner.nextLine();
