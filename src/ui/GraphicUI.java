@@ -153,7 +153,8 @@ public class GraphicUI extends Application implements GameUI {
 	@Override
 	public void delay() {
 		try {
-            Thread.sleep(0);
+		    // Just for debugging.
+            Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

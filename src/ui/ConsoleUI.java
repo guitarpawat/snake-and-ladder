@@ -16,14 +16,15 @@ public class ConsoleUI implements GameUI {
     private Player[] players;
     private Player currentPlayer;
     private GamePresenter presenter;
-
     private Scanner scanner = new Scanner(System.in);
+    private GameInfo.GameCreator creator;
 
     public ConsoleUI() {
         this(new GameInfo.GameCreator().addPlayer("Guitar").addPlayer("Sept"));
     }
 
     public ConsoleUI(GameInfo.GameCreator creator) {
+        this.creator = creator;
         presenter = new GamePresenter(this,creator.build());
         presenter.start();
     }
@@ -74,7 +75,8 @@ public class ConsoleUI implements GameUI {
             System.out.print("[n]ew game, [r]eplay, [q]uit : ");
             String in = scanner.nextLine();
             if(in.equalsIgnoreCase("n")) {
-                //TODO
+                presenter = new GamePresenter(this,creator.build());
+                presenter.start();
                 break;
             } else if(in.equalsIgnoreCase("r")) {
                 currentPlayer = null;
