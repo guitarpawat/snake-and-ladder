@@ -35,8 +35,9 @@ public class GameInfo {
     }
 
     public static class GameCreator {
-        List<Player> players;
-        Board.BoardBuilder boardBuilder;
+        private List<Player> players;
+        private Board.BoardBuilder boardBuilder;
+        private int num_player = 1;
 
         public GameCreator() {
             this(Board.SIZE);
@@ -48,17 +49,17 @@ public class GameInfo {
         }
 
         public GameCreator addPlayer(Player p) {
+            num_player++;
             players.add(p);
             return this;
         }
 
-        public GameCreator addPlayer(String name) {
-            addPlayer(new Player(name));
-            return this;
+        public GameCreator addPlayer(String name, int style) {
+            return addPlayer(new Player(name,style));
         }
 
-        public GameCreator addPlayer(String name, Color color) {
-            return addPlayer(new Player(name,color));
+        public GameCreator addPlayer(String name) {
+            return addPlayer(name,num_player);
         }
 
         public GameCreator ladder(int amount) {

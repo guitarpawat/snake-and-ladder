@@ -1,15 +1,13 @@
 package game;
 
-import javafx.scene.paint.Color;
-
 public class Piece {
-    private Color color;
+    private int style;
 
-    public Piece(Color color) {
-        this.color = color;
+    public Piece(int style) {
+        this.style = style;
     }
 
-    public Color getColor() {
-        return color;
+    public int getStyle() {
+        return style;
     }
 }

@@ -15,25 +15,6 @@ public class Game {
     private List<Memento> mementos = new ArrayList<>();
     private Iterator<Memento> mementoIterator = null;
 
-
-    public Game(int person) {
-        this(person,null);
-    }
-
-    public Game(int person, String... names) {
-        players = new Player[person];
-        for(int i=0; i<person; i++) {
-            try {
-                players[i] = new Player(names[i]);
-            } catch(ArrayIndexOutOfBoundsException | NullPointerException e) {
-                players[i] = new Player(String.format("Player %d",i+1));
-            } finally {
-                board.addPiece(players[i].getPiece(),0);
-            }
-        }
-        state = new InitState();
-    }
-
     public Game(Player[] players, Board board) {
         this.players = players;
         this.board = board;
