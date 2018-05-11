@@ -105,13 +105,6 @@ public class GraphicUI implements GameUI {
 //
 	@Override
 	public void roll() {
-//		dice.setVisible(false);
-//		dice1.setVisible(false);
-//		dice2.setVisible(false);
-//		dice3.setVisible(false);
-//		dice4.setVisible(false);
-//		dice5.setVisible(false);
-//		dice6.setVisible(false);
 		rollButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -150,7 +143,7 @@ public class GraphicUI implements GameUI {
 	
 	public void newGame(){
 		presenter = new GamePresenter(this,creator.build());
-//		presenter.start();
+		presenter.start();
 	}
 //
 	@Override
