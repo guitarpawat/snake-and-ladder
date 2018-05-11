@@ -30,7 +30,7 @@ public class ConsoleUI implements GameUI {
 
     @Override
     public void startGame() {
-        while(presenter.hasNext()) {
+        while(true) {
             presenter.next();
             try {
                 Thread.sleep(321);

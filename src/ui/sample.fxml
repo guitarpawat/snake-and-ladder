@@ -10,14 +10,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.GraphicUI">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.GraphicUI">
    <children>
       <ImageView fitHeight="600.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../image_sl/newboardPNG.png" />
          </image>
       </ImageView>
-      <Button fx:id="rollButton" layoutX="688.0" layoutY="500.0" mnemonicParsing="false" onAction="#roll" prefHeight="86.0" prefWidth="133.0" text="Play">
+      <Button fx:id="rollButton" layoutX="648.0" layoutY="489.0" mnemonicParsing="false" onAction="#roll" prefHeight="86.0" prefWidth="197.0" text="Play">
          <font>
             <Font name="Impact" size="37.0" />
          </font>
@@ -70,7 +70,7 @@
       </ImageView>
       <AnchorPane fx:id="endgameBG" layoutX="191.0" layoutY="46.0" prefHeight="497.0" prefWidth="520.0">
          <children>
-            <ImageView fitHeight="498.0" fitWidth="562.0" layoutX="-2.0" layoutY="-1.0" pickOnBounds="true" visible="false">
+            <ImageView fx:id="background" fitHeight="498.0" fitWidth="562.0" layoutX="-2.0" layoutY="-1.0" pickOnBounds="true" visible="false">
                <image>
                   <Image url="@../image_sl/clean_grey_bg_2560_x_1600_by_markwester-d6e5ne5.png" />
                </image>

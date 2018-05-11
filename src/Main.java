@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        GameUI ui = new ConsoleUI(new GameInfo.GameCreator().addPlayer("Guitar").addPlayer("Sept")
+        GameUI ui = new ConsoleUI(new GameInfo.GameCreator(10).addPlayer("Guitar").addPlayer("Sept")
                 .freeze(randInt()).backward(randInt()).ladder(randInt()).snake(randInt()));
         ui.startGame();
     }

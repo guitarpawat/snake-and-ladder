@@ -13,16 +13,11 @@ public class GamePresenter {
     private GameUI ui;
     private GameInfo info;
     private Game game;
-    private boolean next = true;
 
     public GamePresenter(GameUI ui, GameInfo info) {
         this.ui = ui;
         this.info = info;
         this.game = info.getGame();
-    }
-
-    public boolean hasNext() {
-        return next;
     }
 
     public void next() {
@@ -59,7 +54,6 @@ public class GamePresenter {
                 break;
             case "ended":
                 ui.gameEnded((Player)data.get("player"));
-                next = false;
                 break;
             case "switch":
                 ui.focusPlayer((Player)data.get("player"));
@@ -71,7 +65,9 @@ public class GamePresenter {
                 break;
         }
 
-        game.finishedAction();
+        try {
+            game.finishedAction();
+        } catch (IllegalStateException e) {}
     }
 
     public Map<Player,Integer> getPlayersPosition() {
@@ -87,7 +83,6 @@ public class GamePresenter {
     }
 
     public void replay() {
-        next = true;
         game.replay();
     }
 }

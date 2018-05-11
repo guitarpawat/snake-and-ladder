@@ -166,41 +166,49 @@ public class GraphicUI implements GameUI {
 //
 	@Override
 	public void gameEnded(Player winner) {
-		endgameBG.setVisible(true);
-		newgameImg.setVisible(true);
-		replayImg.setVisible(true);
-		exitImg.setVisible(true);
-		
-		
-		setMessage(winner.getName()+" Wins!");
-	        while(true) {
-	        	newgameBtn.setOnAction(new EventHandler<ActionEvent>() {
+        setMessage("Winner is "+winner.getName()+"!");
+        rollButton.setText("Options");
+        rollButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                gameEnded();
+            }
+        });
 
-	    			@Override
-	    			public void handle(ActionEvent event) {
-	    				newGame();
-	    			}
-	    		});
-	        	
-	        	replayBtn.setOnAction(new EventHandler<ActionEvent>() {
-
-	    			@Override
-	    			public void handle(ActionEvent event) {
-	    				currentPlayer = null;
-	                    presenter.replay();
-	    			}
-	    		});
-	        	
-	        	exitBtn.setOnAction(new EventHandler<ActionEvent>() {
-
-	    			@Override
-	    			public void handle(ActionEvent event) {
-	    				System.exit(0);
-	    			}
-	    		});
-	           
-	        }
 	}
+
+	private void gameEnded() {
+        endgameBG.setVisible(true);
+        newgameImg.setVisible(true);
+        replayImg.setVisible(true);
+        exitImg.setVisible(true);
+
+        newgameBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                newGame();
+            }
+        });
+
+        replayBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                currentPlayer = null;
+                presenter.replay();
+            }
+        });
+
+        exitBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                System.exit(0);
+            }
+        });
+
+    }
 
 	@Override
 	public void diceFace(int face) {
@@ -282,8 +290,8 @@ public class GraphicUI implements GameUI {
         exitImg.setVisible(false);
         setDefaultEvent();
 	    // Just for debugging!
-		creator = new GameInfo.GameCreator().addPlayer("Sept").addPlayer("Guitar").addPlayer("Mai")
-                .snake(2).ladder(2).backward(2).freeze(2);
+		creator = new GameInfo.GameCreator(10).addPlayer("Sept").addPlayer("Guitar").addPlayer("Mai")
+                .snake(0).ladder(0).backward(0).freeze(0);
 		newGame();
 
 	}
@@ -298,14 +306,13 @@ public class GraphicUI implements GameUI {
     }
 
     private void handleDefaultAction() {
-        while(presenter.hasNext()) {
+        while(true) {
             rollButton.setText("Next");
             presenter.next();
             if(msgSet) {
                 msgSet = false;
                 break;
             }
-            msgSet = false;
         }
     }
 
