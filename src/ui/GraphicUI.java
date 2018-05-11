@@ -76,6 +76,15 @@ public class GraphicUI implements GameUI {
     
     @FXML
     private TextField playerNum;
+    
+    @FXML
+    private ImageView background;
+    
+    @FXML
+    private Label winnerName;
+    
+    @FXML
+    private ImageView winnerImg;
 	
 	private int[] squares;
 	private GamePresenter presenter;
@@ -85,6 +94,7 @@ public class GraphicUI implements GameUI {
 	private BeginUI begin;
 	private boolean msgSet = false;
 	private int lastFace = 0;
+	private String theWinner;
 
 
     @Override
@@ -166,7 +176,8 @@ public class GraphicUI implements GameUI {
 //
 	@Override
 	public void gameEnded(Player winner) {
-        setMessage("Winner is "+winner.getName()+"!");
+		theWinner = winner.getName();
+        setMessage("Winner is "+theWinner+"!");
         rollButton.setText("Options");
         rollButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -178,10 +189,13 @@ public class GraphicUI implements GameUI {
 	}
 
 	private void gameEnded() {
+		background.setVisible(true);
         endgameBG.setVisible(true);
         newgameImg.setVisible(true);
         replayImg.setVisible(true);
         exitImg.setVisible(true);
+        winnerImg.setVisible(true);
+        winnerName.setText(theWinner);
 
         newgameBtn.setOnAction(new EventHandler<ActionEvent>() {
 
