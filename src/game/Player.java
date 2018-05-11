@@ -8,13 +8,9 @@ public class Player {
     private Piece piece;
     private boolean freeze = false;
 
-    public Player(String name) {
-        this(name,Color.color(Math.random(),Math.random(),Math.random()));
-    }
-
-    public Player(String name, Color color) {
+    public Player(String name, int style) {
         this.name = name;
-        piece = new Piece(color);
+        piece = new Piece(style);
     }
 
     public int roll(Die die) {
@@ -42,8 +38,8 @@ public class Player {
         return freeze;
     }
 
-    public Color getPieceColor() {
-        return getPiece().getColor();
+    public int getStyle() {
+        return getPiece().getStyle();
     }
 
 }
