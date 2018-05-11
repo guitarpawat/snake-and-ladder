@@ -12,9 +12,10 @@ public class Main {
 
         GameUI ui = new ConsoleUI(new GameInfo.GameCreator().addPlayer("Guitar").addPlayer("Sept")
                 .freeze(randInt()).backward(randInt()).ladder(randInt()).snake(randInt()));
+        ui.startGame();
     }
 
     public static int randInt() {
-        return random.nextInt(5);
+        return random.nextInt(1);
     }
 }

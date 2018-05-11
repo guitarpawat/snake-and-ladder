@@ -84,9 +84,16 @@ public class GraphicUI implements GameUI {
 	private Player currentPlayer;
 	private Die die = new Die();
 	private BeginUI begin;
-	
+	private boolean msgSet = false;
+	private int lastFace = 0;
 
-	@Override
+
+    @Override
+    public void startGame() {
+
+    }
+
+    @Override
 	public void initRenderBoard(int[] squares, Player[] players) {
 		this.players = players;
         this.squares = squares;
@@ -101,56 +108,53 @@ public class GraphicUI implements GameUI {
 	@Override
 	public void focusPlayer(Player player) {
 		currentPlayer = player;
+        setMessage(currentPlayer.getName()+"'s Turn");
 	}
 //
 	@Override
 	public void roll() {
-//		dice.setVisible(false);
-//		dice1.setVisible(false);
-//		dice2.setVisible(false);
-//		dice3.setVisible(false);
-//		dice4.setVisible(false);
-//		dice5.setVisible(false);
-//		dice6.setVisible(false);
-		rollButton.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				message.setText("Press click to roll the dice...");
-				dice.setVisible(false);
-				dice1.setVisible(false);
-				dice2.setVisible(false);
-				dice3.setVisible(false);
-				dice4.setVisible(false);
-				dice5.setVisible(false);
-				dice6.setVisible(false);
-				die.roll();
-				int face = die.getFace();
-				diceFace(face);
-				
-			}
-		});
+        dice.setVisible(true);
+        dice1.setVisible(false);
+        dice2.setVisible(false);
+        dice3.setVisible(false);
+        dice4.setVisible(false);
+        dice5.setVisible(false);
+        dice6.setVisible(false);
+        rollButton.setText("Roll");
+        setMessage("Click to roll the dice...");
+        rollButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                showFace();
+                setDefaultEvent();
+                msgSet = false;
+                handleDefaultAction();
+            }
+        });
+//		rollButton.setOnAction(new EventHandler<ActionEvent>() {
+//
+//			@Override
+//			public void handle(ActionEvent event) {
+//
+//				die.roll();
+//				int face = die.getFace();
+//				diceFace(face);
+//				setDefaultEvent();
+//				msgSet = false;
+//			}
+//		});
 		
 	}
 
 	@Override
-	public void delay() {
-		try {
-		    // Just for debugging.
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-	}
-
-	@Override
 	public void setMessage(String message) {
+        msgSet = true;
 		this.message.setText(message);
 	}
 	
 	public void newGame(){
 		presenter = new GamePresenter(this,creator.build());
-//		presenter.start();
+		startGame();
 	}
 //
 	@Override
@@ -193,82 +197,110 @@ public class GraphicUI implements GameUI {
 
 	@Override
 	public void diceFace(int face) {
-//		face = die.getFace();
-		if (face == 1) {
-			dice1.setVisible(true);
-		} else if (face == 2) {
-			dice2.setVisible(true);
-		} else if (face == 3) {
-			dice3.setVisible(true);
-		} else if (face == 4) {
-			dice4.setVisible(true);
-		} else if (face == 5) {
-			dice5.setVisible(true);
-		} else if (face == 6) {
-			dice6.setVisible(true);
-		}
-
+        lastFace = face;
 	}
+
+	private void showFace() {
+        dice.setVisible(false);
+        dice1.setVisible(false);
+        dice2.setVisible(false);
+        dice3.setVisible(false);
+        dice4.setVisible(false);
+        dice5.setVisible(false);
+        dice6.setVisible(false);
+        if(lastFace == 0) {
+            dice.setVisible(true);
+        } else if (lastFace == 1) {
+            dice1.setVisible(true);
+        } else if (lastFace == 2) {
+            dice2.setVisible(true);
+        } else if (lastFace == 3) {
+            dice3.setVisible(true);
+        } else if (lastFace == 4) {
+            dice4.setVisible(true);
+        } else if (lastFace == 5) {
+            dice5.setVisible(true);
+        } else if (lastFace == 6) {
+            dice6.setVisible(true);
+        }
+    }
 //	
 	private void render() {
         Map<Player,Integer> pos = presenter.getPlayersPosition();
-        for(int i=0; i<squares.length; i++) {
-            List<String> names = new ArrayList<>();
-            for(Player p: pos.keySet()) {
-                if(pos.get(p) == i) {
-                    if(p.equals(currentPlayer)) {
-                        names.add(p.getName()+" <= Current Player.");
-                    } else {
-                        names.add(p.getName());
-                    }
-                }
-            }
-            if(names.size() == 0 && squares[i] == Square.NORMAL_SQUARE) {
-                continue;
-            }
-            System.out.print("SQUARE "+(i+1));
-            switch(squares[i]) {
-                case Square.BACKWARD_SQUARE:
-                    System.out.print("\tBACKWARD SQUARE");
-                    break;
-                case Square.FREEZE_SQUARE:
-                    System.out.print("\tFREEZE SQUARE");
-                    break;
-                case Square.GOAL_SQUARE:
-                    System.out.print("\tGOAL SQUARE");
-                    break;
-                case Square.LADDER_SQUARE:
-                    System.out.print("\tLADDER SQUARE");
-                    System.out.print("\tGoto: "+(i+1+presenter.getSquareMoves(i)));
-                    break;
-                case Square.SNAKE_SQUARE:
-                    System.out.print("\tSNAKE SQUARE");
-                    System.out.print("\tGoto: "+(i+1+presenter.getSquareMoves(i)));
-                    break;
-            }
-            System.out.println();
-            for(String name: names) {
-                System.out.println("..."+name);
-            }
-        }
+//        for(int i=0; i<squares.length; i++) {
+//            List<String> names = new ArrayList<>();
+//            for(Player p: pos.keySet()) {
+//                if(pos.get(p) == i) {
+//                    if(p.equals(currentPlayer)) {
+//                        names.add(p.getName()+" <= Current Player.");
+//                    } else {
+//                        names.add(p.getName());
+//                    }
+//                }
+//            }
+//            if(names.size() == 0 && squares[i] == Square.NORMAL_SQUARE) {
+//                continue;
+//            }
+//            System.out.print("SQUARE "+(i+1));
+//            switch(squares[i]) {
+//                case Square.BACKWARD_SQUARE:
+//                    System.out.print("\tBACKWARD SQUARE");
+//                    break;
+//                case Square.FREEZE_SQUARE:
+//                    System.out.print("\tFREEZE SQUARE");
+//                    break;
+//                case Square.GOAL_SQUARE:
+//                    System.out.print("\tGOAL SQUARE");
+//                    break;
+//                case Square.LADDER_SQUARE:
+//                    System.out.print("\tLADDER SQUARE");
+//                    System.out.print("\tGoto: "+(i+1+presenter.getSquareMoves(i)));
+//                    break;
+//                case Square.SNAKE_SQUARE:
+//                    System.out.print("\tSNAKE SQUARE");
+//                    System.out.print("\tGoto: "+(i+1+presenter.getSquareMoves(i)));
+//                    break;
+//            }
+//            System.out.println();
+//            for(String name: names) {
+//                System.out.println("..."+name);
+//            }
+//        }
     }
 	
 	public void initialize(){
-		
+        endgameBG.setVisible(false);
+        newgameImg.setVisible(false);
+        replayImg.setVisible(false);
+        exitImg.setVisible(false);
+        setDefaultEvent();
 	    // Just for debugging!
 		creator = new GameInfo.GameCreator().addPlayer("Sept").addPlayer("Guitar").addPlayer("Mai")
                 .snake(2).ladder(2).backward(2).freeze(2);
 		newGame();
-		endgameBG.setVisible(false);
-		newgameImg.setVisible(false);
-		replayImg.setVisible(false);
-		exitImg.setVisible(false);
-		
+
 	}
-	
-	public void checkPlayer(){
-		
-	}
+
+	private void setDefaultEvent() {
+        rollButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                handleDefaultAction();
+            }
+        });
+    }
+
+    private void handleDefaultAction() {
+        while(presenter.hasNext()) {
+            rollButton.setText("Next");
+            presenter.next();
+            if(msgSet) {
+                msgSet = false;
+                break;
+            }
+            msgSet = false;
+        }
+    }
 
 
 

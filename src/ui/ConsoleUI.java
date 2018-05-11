@@ -26,7 +26,18 @@ public class ConsoleUI implements GameUI {
     public ConsoleUI(GameInfo.GameCreator creator) {
         this.creator = creator;
         presenter = new GamePresenter(this,creator.build());
-        presenter.start();
+    }
+
+    @Override
+    public void startGame() {
+        while(presenter.hasNext()) {
+            presenter.next();
+            try {
+                Thread.sleep(321);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -55,15 +66,6 @@ public class ConsoleUI implements GameUI {
     }
 
     @Override
-    public void delay() {
-        try {
-            Thread.sleep(321);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
     public void setMessage(String message) {
         System.out.println(message);
     }
@@ -76,11 +78,12 @@ public class ConsoleUI implements GameUI {
             String in = scanner.nextLine();
             if(in.equalsIgnoreCase("n")) {
                 presenter = new GamePresenter(this,creator.build());
-                presenter.start();
+                startGame();
                 break;
             } else if(in.equalsIgnoreCase("r")) {
                 currentPlayer = null;
                 presenter.replay();
+                startGame();
                 break;
             } else if(in.equalsIgnoreCase("q")) {
                 System.exit(0);
