@@ -82,7 +82,6 @@ public class GraphicUI implements GameUI {
 	private GameInfo.GameCreator creator;
 	private Player[] players;
 	private Player currentPlayer;
-	private Die die = new Die();
 	private BeginUI begin;
 	private boolean msgSet = false;
 	private int lastFace = 0;
@@ -121,7 +120,7 @@ public class GraphicUI implements GameUI {
         dice5.setVisible(false);
         dice6.setVisible(false);
         rollButton.setText("Roll");
-        setMessage("Click to roll the dice...");
+        setMessage("Click to roll the dice...",true);
         rollButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -148,9 +147,17 @@ public class GraphicUI implements GameUI {
 
 	@Override
 	public void setMessage(String message) {
-        msgSet = true;
-		this.message.setText(message);
+        setMessage(message,false);
 	}
+
+	public void setMessage(String message, boolean append) {
+        msgSet = true;
+        if(append) {
+            this.message.setText(this.message.getText()+"\n"+message);
+        } else {
+            this.message.setText(message);
+        }
+    }
 	
 	public void newGame(){
 		presenter = new GamePresenter(this,creator.build());

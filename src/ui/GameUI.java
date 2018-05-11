@@ -9,6 +9,9 @@ public interface GameUI {
     public void focusPlayer(Player player);
     public void roll();
     public void setMessage(String message);
+    public default void setMessage(String message, boolean append) {
+        setMessage(message);
+    }
     public void gameEnded(Player winner);
     public void diceFace(int face);
 
