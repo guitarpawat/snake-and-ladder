@@ -76,13 +76,14 @@ public class GraphicUI implements GameUI {
     
     @FXML
     private TextField playerNum;
-//	
+	
 	private int[] squares;
 	private GamePresenter presenter;
 	private GameInfo.GameCreator creator;
 	private Player[] players;
 	private Player currentPlayer;
 	private Die die = new Die();
+	private BeginUI begin;
 	
 
 	@Override
@@ -262,6 +263,10 @@ public class GraphicUI implements GameUI {
 		newgameImg.setVisible(false);
 		replayImg.setVisible(false);
 		exitImg.setVisible(false);
+		
+	}
+	
+	public void checkPlayer(){
 		
 	}
 
