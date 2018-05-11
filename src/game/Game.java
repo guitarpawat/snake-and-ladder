@@ -72,7 +72,6 @@ public class Game {
 
     public void replay() {
         state = new ReplayInitState();
-        state.doAction();
     }
 
     private int currentPlayerRollDice() {
@@ -502,12 +501,13 @@ public class Game {
     private class ReplayInitState extends State {
 
         public ReplayInitState() {
-            super(null,null);
+            super(null,new GameData());
         }
 
         @Override
         public void doAction() {
             super.doAction();
+            data.addData("state","replay");
             mementoIterator = mementos.iterator();
             for(Player p: players) {
                 board.movePiece(p.getPiece(),-board.getPiecePosition(p.getPiece()));

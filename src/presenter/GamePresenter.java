@@ -13,6 +13,7 @@ public class GamePresenter {
     private GameUI ui;
     private GameInfo info;
     private Game game;
+    private boolean next = true;
 
     public GamePresenter(GameUI ui, GameInfo info) {
         this.ui = ui;
@@ -20,55 +21,57 @@ public class GamePresenter {
         this.game = info.getGame();
     }
 
-    public void start() {
-        while(true) {
-            switch(game.getActionDescription()) {
-                case "default_roll":
-                    ui.roll();
-                    break;
-                case "lucky_roll":
-                    ui.setMessage("LUCKY! You can roll the dice one more time.");
-                    ui.roll();
-                    break;
-                case "backward_roll":
-                    ui.setMessage("Unfortunately, you are on the backward square.");
-                    ui.roll();
-                    break;
-                case "set_freeze":
-                    ui.setMessage("Unfortunately, you are on the freeze square.");
-                    break;
-                case "un_freeze":
-                    ui.setMessage("You is frozen, please play come again next turn.");
-                    break;
-            }
+    public boolean hasNext() {
+        return next;
+    }
 
-            game.doAction();
-
-            Map<String,Object> data = game.getActionData().getAll();
-            if(data.containsKey("face") && !data.get("state").equals("move")) {
-                ui.diceFace((Integer)data.get("face"));
-            }
-            switch((String)data.get("state")) {
-                case "move":
-                    ui.setMessage("New position: "+(info.getBoard().getPiecePosition(((Player)data.get("player")).getPiece())+1));
-                    ui.reRenderBoard();
-                    break;
-                case "ended":
-                    ui.gameEnded((Player)data.get("player"));
-                    break;
-                case "switch":
-                    ui.focusPlayer((Player)data.get("player"));
-                    break;
-                case "init":
-                    ui.initRenderBoard(info.getBoardInfo(),info.getPlayers());
-                    ui.setMessage("Current position: "+(info.getBoard().getPiecePosition(((Player)data.get("player")).getPiece())+1));
-                    ui.focusPlayer((Player)data.get("player"));
-                    break;
-            }
-
-            game.finishedAction();
-            ui.delay();
+    public void next() {
+        switch(game.getActionDescription()) {
+            case "default_roll":
+                ui.roll();
+                break;
+            case "lucky_roll":
+                ui.setMessage("LUCKY! You can roll the dice one more time.");
+                ui.roll();
+                break;
+            case "backward_roll":
+                ui.setMessage("Unfortunately, you are on the backward square.");
+                ui.roll();
+                break;
+            case "set_freeze":
+                ui.setMessage("Unfortunately, you are on the freeze square.");
+                break;
+            case "un_freeze":
+                ui.setMessage("You is frozen, please play come again next turn.");
+                break;
         }
+
+        game.doAction();
+
+        Map<String,Object> data = game.getActionData().getAll();
+        if(data.containsKey("face") && !data.get("state").equals("move")) {
+            ui.diceFace((Integer)data.get("face"));
+        }
+        switch((String)data.get("state")) {
+            case "move":
+                ui.setMessage("New position: "+(info.getBoard().getPiecePosition(((Player)data.get("player")).getPiece())+1));
+                ui.reRenderBoard();
+                break;
+            case "ended":
+                ui.gameEnded((Player)data.get("player"));
+                next = false;
+                break;
+            case "switch":
+                ui.focusPlayer((Player)data.get("player"));
+                break;
+            case "init":
+                ui.initRenderBoard(info.getBoardInfo(),info.getPlayers());
+                ui.setMessage("Current position: "+(info.getBoard().getPiecePosition(((Player)data.get("player")).getPiece())+1));
+                ui.focusPlayer((Player)data.get("player"));
+                break;
+        }
+
+        game.finishedAction();
     }
 
     public Map<Player,Integer> getPlayersPosition() {
@@ -84,6 +87,7 @@ public class GamePresenter {
     }
 
     public void replay() {
+        next = true;
         game.replay();
     }
 }
