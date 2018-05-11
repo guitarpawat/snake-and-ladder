@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.GraphicController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.GraphicController">
    <children>
       <ImageView fitHeight="600.0" fitWidth="600.0" pickOnBounds="true">
          <image>
@@ -75,27 +75,27 @@
                   <Glow level="1.0" />
                </effect>
             </ImageView>
-            <Button fx:id="nb" layoutX="74.0" layoutY="330.0" mnemonicParsing="false" style="-fx-background-color: teansparent;">
+            <Button fx:id="newgameBtn" layoutX="74.0" layoutY="330.0" mnemonicParsing="false" style="-fx-background-color: teansparent;">
                <graphic>
-                  <ImageView fx:id="newgameB" fitHeight="99.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fx:id="newgameImg" fitHeight="99.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@../image_sl/btn_more_game_click.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="rb" layoutX="231.0" layoutY="330.0" mnemonicParsing="false" style="-fx-background-color: teansparent;">
+            <Button fx:id="replayBtn" layoutX="231.0" layoutY="330.0" mnemonicParsing="false" style="-fx-background-color: teansparent;">
                <graphic>
-                  <ImageView fx:id="replayB" fitHeight="103.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fx:id="replayImg" fitHeight="103.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@../image_sl/btn_reload_default@4x.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="eb" layoutX="382.0" layoutY="330.0" mnemonicParsing="false" prefHeight="96.0" prefWidth="111.0" style="-fx-background-color: teansparent;">
+            <Button fx:id="exitBtn" layoutX="382.0" layoutY="330.0" mnemonicParsing="false" prefHeight="96.0" prefWidth="111.0" style="-fx-background-color: teansparent;">
                <graphic>
-                  <ImageView fx:id="exitB" fitHeight="100.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fx:id="exitImg" fitHeight="100.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@../image_sl/btn_exit_disabled@4x.png" />
                      </image>

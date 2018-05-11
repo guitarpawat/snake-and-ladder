@@ -51,22 +51,22 @@ public class GraphicController implements GameUI {
 	private ImageView dice;
 	
 	@FXML
-    private Button nb;
+    private Button newgameBtn;
 
     @FXML
-    private Button rb;
+    private Button replayBtn;
 
     @FXML
-    private Button eb;
+    private Button exitBtn;
 	
 	@FXML
-    private ImageView newgameB;
+    private ImageView newgameImg;
 
     @FXML
-    private ImageView replayB;
+    private ImageView replayImg;
 
     @FXML
-    private ImageView exitB;
+    private ImageView exitImg;
     
     @FXML
     private AnchorPane endgameBG;
@@ -155,14 +155,14 @@ public class GraphicController implements GameUI {
 	@Override
 	public void gameEnded(Player winner) {
 		endgameBG.setVisible(true);
-		newgameB.setVisible(true);
-		replayB.setVisible(true);
-		exitB.setVisible(true);
+		newgameImg.setVisible(true);
+		replayImg.setVisible(true);
+		exitImg.setVisible(true);
 		
 		
 		setMessage(winner.getName()+" Wins!");
 	        while(true) {
-	        	nb.setOnAction(new EventHandler<ActionEvent>() {
+	        	newgameBtn.setOnAction(new EventHandler<ActionEvent>() {
 
 	    			@Override
 	    			public void handle(ActionEvent event) {
@@ -170,7 +170,7 @@ public class GraphicController implements GameUI {
 	    			}
 	    		});
 	        	
-	        	rb.setOnAction(new EventHandler<ActionEvent>() {
+	        	replayBtn.setOnAction(new EventHandler<ActionEvent>() {
 
 	    			@Override
 	    			public void handle(ActionEvent event) {
@@ -179,7 +179,7 @@ public class GraphicController implements GameUI {
 	    			}
 	    		});
 	        	
-	        	eb.setOnAction(new EventHandler<ActionEvent>() {
+	        	exitBtn.setOnAction(new EventHandler<ActionEvent>() {
 
 	    			@Override
 	    			public void handle(ActionEvent event) {
@@ -259,9 +259,9 @@ public class GraphicController implements GameUI {
                 .snake(2).ladder(2).backward(2).freeze(2);
 		newGame();
 		endgameBG.setVisible(false);
-		newgameB.setVisible(false);
-		replayB.setVisible(false);
-		exitB.setVisible(false);
+		newgameImg.setVisible(false);
+		replayImg.setVisible(false);
+		exitImg.setVisible(false);
 		
 	}
 
