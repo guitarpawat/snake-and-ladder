@@ -99,7 +99,7 @@ public class GraphicUI implements GameUI {
 
     @Override
     public void startGame() {
-
+        setDefaultEvent();
     }
 
     @Override
@@ -186,21 +186,42 @@ public class GraphicUI implements GameUI {
             }
         });
 
+        replayBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                currentPlayer = null;
+                presenter.replay();
+                startGame();
+            }
+        });
+
 	}
 
+	private void setPopup(boolean show) {
+        background.setVisible(show);
+        endgameBG.setVisible(show);
+        newgameImg.setVisible(show);
+        replayImg.setVisible(show);
+        exitImg.setVisible(show);
+        winnerImg.setVisible(show);
+    }
+
 	private void gameEnded() {
-		background.setVisible(true);
-        endgameBG.setVisible(true);
-        newgameImg.setVisible(true);
-        replayImg.setVisible(true);
-        exitImg.setVisible(true);
-        winnerImg.setVisible(true);
+
+        setPopup(true);
+
         winnerName.setText(theWinner);
 
         newgameBtn.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
+                setPopup(false);
+                currentPlayer = null;
+                System.out.println("replay");
+                setDefaultEvent();
+                rollButton.setText("Start");
+                setMessage("New Game");
                 newGame();
             }
         });
@@ -209,7 +230,12 @@ public class GraphicUI implements GameUI {
 
             @Override
             public void handle(ActionEvent event) {
+                setPopup(false);
                 currentPlayer = null;
+                System.out.println("replay");
+                setDefaultEvent();
+                rollButton.setText("Start");
+                setMessage("Replay Game");
                 presenter.replay();
             }
         });
@@ -302,12 +328,11 @@ public class GraphicUI implements GameUI {
         newgameImg.setVisible(false);
         replayImg.setVisible(false);
         exitImg.setVisible(false);
-        setDefaultEvent();
 	    // Just for debugging!
-		creator = new GameInfo.GameCreator(10).addPlayer("Sept").addPlayer("Guitar").addPlayer("Mai")
-                .snake(0).ladder(0).backward(0).freeze(0);
+		creator = new GameInfo.GameCreator().addPlayer("Sept").addPlayer("Guitar").addPlayer("Mai")
+                .snake(4).ladder(4).backward(4).freeze(4);
 		newGame();
-
+        startGame();
 	}
 
 	private void setDefaultEvent() {
