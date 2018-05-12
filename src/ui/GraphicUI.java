@@ -81,6 +81,9 @@ public class GraphicUI implements GameUI {
     private ImageView background;
     
     @FXML
+    private ImageView board;
+    
+    @FXML
     private Label winnerName;
     
     @FXML
@@ -119,7 +122,7 @@ public class GraphicUI implements GameUI {
 		currentPlayer = player;
         setMessage(currentPlayer.getName()+"'s Turn");
 	}
-//
+
 	@Override
 	public void roll() {
         dice.setVisible(true);
@@ -173,7 +176,7 @@ public class GraphicUI implements GameUI {
 		presenter = new GamePresenter(this,creator.build());
 		startGame();
 	}
-//
+
 	@Override
 	public void gameEnded(Player winner) {
 		theWinner = winner.getName();
@@ -304,7 +307,7 @@ public class GraphicUI implements GameUI {
         exitImg.setVisible(false);
         setDefaultEvent();
 	    // Just for debugging!
-		creator = new GameInfo.GameCreator(10).addPlayer("Sept").addPlayer("Guitar").addPlayer("Mai")
+		creator = new GameInfo.GameCreator().addPlayer("Sept").addPlayer("Guitar").addPlayer("Mai")
                 .snake(0).ladder(0).backward(0).freeze(0);
 		newGame();
 
