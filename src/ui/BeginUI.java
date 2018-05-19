@@ -41,7 +41,7 @@ public class BeginUI {
 	@FXML
 	private void playGame(ActionEvent event){
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("gameGUI.fxml"));
 			Stage stage = new Stage();
 			stage.setScene(new Scene((Parent) loader.load()));
 			stage.show();

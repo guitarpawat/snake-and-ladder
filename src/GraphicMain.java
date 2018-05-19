@@ -10,7 +10,7 @@ public class GraphicMain extends Application {
 	@Override
 	public void start(Stage primaryStage){
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("ui/sample.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("ui/gameGUI.fxml"));
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("ui/application.css").toExternalForm());
 			primaryStage.setScene(scene);

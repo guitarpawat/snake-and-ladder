@@ -79,7 +79,7 @@
                   <Glow level="1.0" />
                </effect>
             </ImageView>
-            <Button fx:id="newgameBtn" layoutX="74.0" layoutY="330.0" mnemonicParsing="false" style="-fx-background-color: teansparent;">
+            <Button fx:id="newgameBtn" layoutX="74.0" layoutY="330.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
                <graphic>
                   <ImageView fx:id="newgameImg" fitHeight="99.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
@@ -88,7 +88,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="replayBtn" layoutX="231.0" layoutY="330.0" mnemonicParsing="false" style="-fx-background-color: teansparent;">
+            <Button fx:id="replayBtn" layoutX="231.0" layoutY="330.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
                <graphic>
                   <ImageView fx:id="replayImg" fitHeight="103.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
@@ -97,7 +97,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="exitBtn" layoutX="382.0" layoutY="330.0" mnemonicParsing="false" prefHeight="96.0" prefWidth="111.0" style="-fx-background-color: teansparent;">
+            <Button fx:id="exitBtn" layoutX="382.0" layoutY="330.0" mnemonicParsing="false" prefHeight="96.0" prefWidth="111.0" style="-fx-background-color: transparent;">
                <graphic>
                   <ImageView fx:id="exitImg" fitHeight="100.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
