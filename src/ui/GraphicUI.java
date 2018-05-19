@@ -346,8 +346,13 @@ public class GraphicUI implements GameUI {
 
 			} else if (squares[i] == Square.BACKWARD_SQUARE) {
 				try {
-					boxes[i].setImage(
-							new Image(new File("src/image_sl/backward.png").toURI().toURL().toExternalForm()));
+					if(((i-1)/8)%2 == 0) {
+                        boxes[i].setImage(
+                                new Image(new File("src/image_sl/backward.png").toURI().toURL().toExternalForm()));
+                    } else {
+                        boxes[i].setImage(
+                                new Image(new File("src/image_sl/backward-rotate.png").toURI().toURL().toExternalForm()));
+                    }
 					boxes[i].setVisible(true);
 				} catch (MalformedURLException e) {
 					e.printStackTrace();
