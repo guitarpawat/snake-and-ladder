@@ -64,10 +64,7 @@ public class GamePresenter {
                 ui.focusPlayer((Player)data.get("player"));
                 break;
         }
-
-        try {
-            game.finishedAction();
-        } catch (IllegalStateException e) {}
+        game.finishedAction();
     }
 
     public Map<Player,Integer> getPlayersPosition() {

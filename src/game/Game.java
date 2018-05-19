@@ -494,7 +494,7 @@ public class Game {
 
         @Override
         public void toNextState() {
-            throw  new IllegalStateException("The game was ended.");
+            // DO NOTHING
         }
     }
 

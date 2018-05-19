@@ -9,16 +9,13 @@ import javafx.stage.Stage;
 public class GraphicMain extends Application {
 	@Override
 	public void start(Stage primaryStage){
-		System.out.println("fxml");
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("ui/sample.fxml"));
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("ui/application.css").toExternalForm());
 			primaryStage.setScene(scene);
-			System.out.println("enter");
 			primaryStage.show();
 		} catch (Exception e) {
-			System.out.println("out");
 			e.printStackTrace();
 		}
 	}

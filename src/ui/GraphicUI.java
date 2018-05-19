@@ -232,7 +232,6 @@ public class GraphicUI implements GameUI {
 	private GameInfo.GameCreator creator;
 	private Player[] players;
 	private Player currentPlayer;
-	private BeginUI begin;
 	private boolean msgSet = false;
 	private int lastFace = 0;
 	private String theWinner;
@@ -315,23 +314,33 @@ public class GraphicUI implements GameUI {
 		add();
 		this.players = players;
 		this.squares = squares;
-		for (int i = 0; i < squares.length - 1; i++) {
+		for (int i = 0; i < squares.length; i++) {
 			if (squares[i] == Square.NORMAL_SQUARE) {
 
 			} else if (squares[i] == Square.NORMAL_SQUARE) {
-
+				// DO NOTHING
 			} else if (squares[i] == Square.LADDER_SQUARE) {
-
+				try {
+					boxes[i].setImage(
+							new Image(new File("src/image_sl/ladder.png").toURI().toURL().toExternalForm()));
+					boxes[i].setVisible(true);
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				}
 			} else if (squares[i] == Square.SNAKE_SQUARE) {
-
+				try {
+					boxes[i].setImage(
+							new Image(new File("src/image_sl/snake.png").toURI().toURL().toExternalForm()));
+					boxes[i].setVisible(true);
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				}
 			} else if (squares[i] == Square.FREEZE_SQUARE) {
 				try {
 					boxes[i].setImage(
 							new Image(new File("src/image_sl/snowflake.png").toURI().toURL().toExternalForm()));
 					boxes[i].setVisible(true);
-					System.out.println("s"+i);
 				} catch (MalformedURLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
@@ -340,14 +349,18 @@ public class GraphicUI implements GameUI {
 					boxes[i].setImage(
 							new Image(new File("src/image_sl/backward.png").toURI().toURL().toExternalForm()));
 					boxes[i].setVisible(true);
-					System.out.println("b"+i);
 				} catch (MalformedURLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
 			} else if (squares[i] == Square.GOAL_SQUARE) {
-
+                try {
+                    boxes[i].setImage(
+                            new Image(new File("src/image_sl/goal.png").toURI().toURL().toExternalForm()));
+                    boxes[i].setVisible(true);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
 			}
 
 			render();
