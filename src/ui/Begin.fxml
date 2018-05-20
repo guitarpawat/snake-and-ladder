@@ -14,8 +14,8 @@
       <TextField fx:id="player2Name" layoutX="250.0" layoutY="293.0" />
       <TextField fx:id="player3Name" layoutX="250.0" layoutY="335.0" />
       <TextField fx:id="player4Name" layoutX="250.0" layoutY="376.0" />
-      <TextField fx:id="snakeTF" layoutX="654.0" layoutY="250.0" />
-      <TextField fx:id="ladderTF" layoutX="654.0" layoutY="293.0" />
+      <TextField fx:id="snakeTF" layoutX="654.0" layoutY="250.0" text="3" />
+      <TextField fx:id="ladderTF" layoutX="654.0" layoutY="293.0" text="3" />
       <Label alignment="CENTER" layoutX="115.0" layoutY="250.0" prefHeight="26.0" prefWidth="134.0" text="Player 1 :">
          <font>
             <Font name="Impact" size="17.0" />
@@ -36,8 +36,8 @@
             <Font name="Impact" size="17.0" />
          </font>
       </Label>
-      <TextField fx:id="freezeTF" layoutX="654.0" layoutY="375.0" />
-      <TextField fx:id="backwardTF" layoutX="654.0" layoutY="334.0" />
+      <TextField fx:id="freezeTF" layoutX="654.0" layoutY="375.0" text="3" />
+      <TextField fx:id="backwardTF" layoutX="654.0" layoutY="334.0" text="3" />
       <Label alignment="CENTER" layoutX="519.0" layoutY="250.0" prefHeight="26.0" prefWidth="134.0" text="Snake">
          <font>
             <Font name="Impact" size="17.0" />
@@ -63,7 +63,7 @@
             <Image url="@../image_sl/snake_ladder_icon.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="startButton" layoutX="334.0" layoutY="468.0" mnemonicParsing="false" onAction="#playGame" style="-fx-background-color: teansparent;">
+      <Button fx:id="startButton" layoutX="334.0" layoutY="468.0" mnemonicParsing="false" onAction="#playGame" style="-fx-background-color: transparent;">
          <graphic>
             <ImageView fitHeight="67.0" fitWidth="215.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -76,5 +76,10 @@
       <Label layoutX="117.0" layoutY="298.0" prefWidth="20.0" style="-fx-background-color: #006DF0;" />
       <Label layoutX="117.0" layoutY="339.0" prefWidth="20.0" style="-fx-background-color: #91DC5A;" />
       <Label layoutX="117.0" layoutY="380.0" prefWidth="20.0" style="-fx-background-color: #933EC5;" />
+      <Label fx:id="errorField" alignment="CENTER" contentDisplay="CENTER" layoutX="113.0" layoutY="419.0" prefHeight="39.0" prefWidth="691.0" text="ERROR" textAlignment="CENTER" textFill="RED" visible="false">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

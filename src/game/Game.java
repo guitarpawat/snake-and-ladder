@@ -74,6 +74,15 @@ public class Game {
         state = new ReplayInitState();
     }
 
+    public void newGame() {
+        for(Player p: players) {
+            board.movePiece(p.getPiece(),-board.getPiecePosition(p.getPiece()));
+        }
+        state = new InitState();
+        mementos = new ArrayList<>();
+        mementoIterator = null;
+    }
+
     private int currentPlayerRollDice() {
         return currentPlayer().roll(die);
     }
@@ -85,7 +94,6 @@ public class Game {
     private void switchPlayer() {
         currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
     }
-
 
 
     private abstract class State {

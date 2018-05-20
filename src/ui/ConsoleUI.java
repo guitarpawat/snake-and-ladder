@@ -77,7 +77,7 @@ public class ConsoleUI implements GameUI {
             System.out.print("[n]ew game, [r]eplay, [q]uit : ");
             String in = scanner.nextLine();
             if(in.equalsIgnoreCase("n")) {
-                presenter = new GamePresenter(this,creator.build());
+                presenter.newGame();
                 startGame();
                 break;
             } else if(in.equalsIgnoreCase("r")) {

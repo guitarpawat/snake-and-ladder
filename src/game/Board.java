@@ -196,7 +196,7 @@ public class Board {
 
         private void check(int amount) {
             if(limit - amount < 0) {
-                throw new IllegalStateException("Setting reach above the limit!");
+                throw new IllegalStateException("Square setting reach above the limit!");
             } else {
                 limit -= amount;
             }
