@@ -72,9 +72,9 @@
             </ImageView>
          </graphic>
       </Button>
-      <Label layoutX="117.0" layoutY="254.0" prefWidth="20.0" style="-fx-background-color: #FFFF00;" />
-      <Label layoutX="117.0" layoutY="298.0" prefWidth="20.0" style="-fx-background-color: #00FFFF;" />
-      <Label layoutX="117.0" layoutY="339.0" prefWidth="20.0" style="-fx-background-color: #FF0000;" />
-      <Label layoutX="117.0" layoutY="380.0" prefWidth="20.0" style="-fx-background-color: #00FF00;" />
+      <Label layoutX="117.0" layoutY="254.0" prefWidth="20.0" style="-fx-background-color: #FFDA44;" />
+      <Label layoutX="117.0" layoutY="298.0" prefWidth="20.0" style="-fx-background-color: #006DF0;" />
+      <Label layoutX="117.0" layoutY="339.0" prefWidth="20.0" style="-fx-background-color: #91DC5A;" />
+      <Label layoutX="117.0" layoutY="380.0" prefWidth="20.0" style="-fx-background-color: #933EC5;" />
    </children>
 </AnchorPane>
