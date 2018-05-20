@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.GraphicUI">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.GraphicUI">
    <children>
       <ImageView fx:id="board" fitHeight="600.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -64,14 +63,14 @@
             <Image url="@../image_sl/dice-png-27671.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="dice" fitHeight="150.0" fitWidth="200.0" layoutX="680.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="dice" fitHeight="150.0" fitWidth="200.0" layoutX="665.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../image_sl/dice-png-41786.png" />
          </image>
       </ImageView>
       <AnchorPane fx:id="endgameBG" layoutX="191.0" layoutY="46.0" prefHeight="497.0" prefWidth="520.0">
          <children>
-            <ImageView fx:id="background" fitHeight="498.0" fitWidth="562.0" layoutX="-2.0" layoutY="-1.0" pickOnBounds="true" visible="false">
+            <ImageView fx:id="background" fitHeight="498.0" fitWidth="562.0" layoutX="-2.0" layoutY="-1.0" pickOnBounds="true">
                <image>
                   <Image url="@../image_sl/clean_grey_bg_2560_x_1600_by_markwester-d6e5ne5.png" />
                </image>
@@ -79,43 +78,62 @@
                   <Glow level="1.0" />
                </effect>
             </ImageView>
-            <Button fx:id="newgameBtn" layoutX="74.0" layoutY="330.0" mnemonicParsing="false" style="-fx-background-color: teansparent;">
-               <graphic>
-                  <ImageView fx:id="newgameImg" fitHeight="99.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                     <image>
-                        <Image url="@../image_sl/btn_more_game_click.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
+            <Button fx:id="newgameBtn" layoutX="349.0" layoutY="205.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="150.0" style="-fx-background-color: #FF0000;" text="New Game" textFill="WHITE">
+               <effect>
+                  <GaussianBlur radius="0.0">
+                     <input>
+                        <DropShadow />
+                     </input>
+                  </GaussianBlur>
+               </effect>
+               <font>
+                  <Font name="Impact" size="24.0" />
+               </font>
             </Button>
-            <Button fx:id="replayBtn" layoutX="231.0" layoutY="330.0" mnemonicParsing="false" style="-fx-background-color: teansparent;">
-               <graphic>
-                  <ImageView fx:id="replayImg" fitHeight="103.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                     <image>
-                        <Image url="@../image_sl/btn_reload_default@4x.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
+            <Button fx:id="replayBtn" layoutX="349.0" layoutY="298.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="150.0" style="-fx-background-color: #808080;" text="Replay">
+               <effect>
+                  <GaussianBlur radius="0.0">
+                     <input>
+                        <DropShadow />
+                     </input>
+                  </GaussianBlur>
+               </effect>
+               <font>
+                  <Font name="Impact" size="24.0" />
+               </font>
             </Button>
-            <Button fx:id="exitBtn" layoutX="382.0" layoutY="330.0" mnemonicParsing="false" prefHeight="96.0" prefWidth="111.0" style="-fx-background-color: teansparent;">
-               <graphic>
-                  <ImageView fx:id="exitImg" fitHeight="100.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                     <image>
-                        <Image url="@../image_sl/btn_exit_disabled@4x.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
+            <Button fx:id="exitBtn" layoutX="349.0" layoutY="384.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="150.0" style="-fx-background-color: #FFFFFF;" text="Exit" textFill="RED">
+               <font>
+                  <Font name="Impact" size="24.0" />
+               </font>
+               <effect>
+                  <GaussianBlur radius="0.0">
+                     <input>
+                        <DropShadow />
+                     </input>
+                  </GaussianBlur>
+               </effect>
             </Button>
-            <ImageView fx:id="winnerImg" fitHeight="132.0" fitWidth="266.0" layoutX="152.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fx:id="winnerImg" fitHeight="132.0" fitWidth="266.0" layoutX="50.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../image_sl/Winner.png" />
                </image>
             </ImageView>
-            <Label fx:id="winnerName" alignment="CENTER" layoutX="175.0" layoutY="205.0" prefHeight="69.0" prefWidth="226.0" textFill="#ed0b0b">
+            <Label fx:id="winnerName" alignment="CENTER" layoutX="106.0" layoutY="284.0" prefHeight="69.0" prefWidth="226.0" text="Punpun" textFill="#df0a0a">
                <font>
                   <Font name="Impact" size="60.0" />
                </font>
             </Label>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="355.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image_sl/Red-Dice-Wild_CHARACTER.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="132.0" fitWidth="115.0" layoutX="23.0" layoutY="264.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image_sl/snake.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </children>
