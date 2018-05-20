@@ -42,4 +42,11 @@ public class Player {
         return getPiece().getStyle();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null) return false;
+        if(obj.getClass() != getClass()) return false;
+        Player p = (Player) obj;
+        return p.getName().equals(name) && p.getStyle()==getStyle();
+    }
 }

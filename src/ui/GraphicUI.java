@@ -2,13 +2,9 @@ package ui;
 
 import java.io.File;
 import java.net.MalformedURLException;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
-import game.Die;
-import game.Game;
+import game.Piece;
 import game.Player;
 import game.Square;
 import javafx.event.ActionEvent;
@@ -230,78 +226,78 @@ public class GraphicUI implements GameUI {
 	private int[] squares;
 	private GamePresenter presenter;
 	private GameInfo.GameCreator creator;
-	private Player[] players;
+	private PieceAdapter[] playersPiece;
 	private Player currentPlayer;
 	private boolean msgSet = false;
 	private int lastFace = 0;
 	private String theWinner;
-	private ImageView[] boxes = new ImageView[65];
+	private ImageStack[] imageStack = new ImageStack[64];
 
 	public void add() {
-		boxes[0] = box1;
-		boxes[1] = box2;
-		boxes[2] = box3;
-		boxes[3] = box4;
-		boxes[4] = box5;
-		boxes[5] = box6;
-		boxes[6] = box7;
-		boxes[7] = box8;
-		boxes[8] = box9;
-		boxes[9] = box10;
-		boxes[10] = box11;
-		boxes[11] = box12;
-		boxes[12] = box13;
-		boxes[13] = box14;
-		boxes[14] = box15;
-		boxes[15] = box16;
-		boxes[16] = box17;
-		boxes[17] = box18;
-		boxes[18] = box19;
-		boxes[19] = box20;
-		boxes[20] = box21;
-		boxes[21] = box22;
-		boxes[22] = box23;
-		boxes[23] = box24;
-		boxes[24] = box25;
-		boxes[25] = box26;
-		boxes[26] = box27;
-		boxes[27] = box28;
-		boxes[28] = box29;
-		boxes[29] = box30;
-		boxes[30] = box31;
-		boxes[31] = box32;
-		boxes[32] = box33;
-		boxes[33] = box34;
-		boxes[34] = box35;
-		boxes[35] = box36;
-		boxes[36] = box37;
-		boxes[37] = box38;
-		boxes[38] = box39;
-		boxes[39] = box40;
-		boxes[40] = box41;
-		boxes[41] = box42;
-		boxes[42] = box43;
-		boxes[43] = box44;
-		boxes[44] = box45;
-		boxes[45] = box46;
-		boxes[46] = box47;
-		boxes[47] = box48;
-		boxes[48] = box49;
-		boxes[49] = box50;
-		boxes[50] = box51;
-		boxes[51] = box52;
-		boxes[52] = box53;
-		boxes[53] = box54;
-		boxes[54] = box55;
-		boxes[55] = box56;
-		boxes[56] = box57;
-		boxes[57] = box58;
-		boxes[58] = box59;
-		boxes[59] = box60;
-		boxes[60] = box61;
-		boxes[61] = box62;
-		boxes[62] = box63;
-		boxes[63] = box64;
+        imageStack[0] = new ImageStack(box1);
+        imageStack[1] = new ImageStack(box2);
+        imageStack[2] = new ImageStack(box3);
+        imageStack[3] = new ImageStack(box4);
+        imageStack[4] = new ImageStack(box5);
+        imageStack[5] = new ImageStack(box6);
+        imageStack[6] = new ImageStack(box7);
+        imageStack[7] = new ImageStack(box8);
+        imageStack[8] = new ImageStack(box9);
+        imageStack[9] = new ImageStack(box10);
+        imageStack[10] = new ImageStack(box11);
+        imageStack[11] = new ImageStack(box12);
+        imageStack[12] = new ImageStack(box13);
+        imageStack[13] = new ImageStack(box14);
+        imageStack[14] = new ImageStack(box15);
+        imageStack[15] = new ImageStack(box16);
+        imageStack[16] = new ImageStack(box17);
+        imageStack[17] = new ImageStack(box18);
+        imageStack[18] = new ImageStack(box19);
+        imageStack[19] = new ImageStack(box20);
+        imageStack[20] = new ImageStack(box21);
+        imageStack[21] = new ImageStack(box22);
+        imageStack[22] = new ImageStack(box23);
+        imageStack[23] = new ImageStack(box24);
+        imageStack[24] = new ImageStack(box25);
+        imageStack[25] = new ImageStack(box26);
+        imageStack[26] = new ImageStack(box27);
+        imageStack[27] = new ImageStack(box28);
+        imageStack[28] = new ImageStack(box29);
+        imageStack[29] = new ImageStack(box30);
+        imageStack[30] = new ImageStack(box31);
+        imageStack[31] = new ImageStack(box32);
+        imageStack[32] = new ImageStack(box33);
+        imageStack[33] = new ImageStack(box34);
+        imageStack[34] = new ImageStack(box35);
+        imageStack[35] = new ImageStack(box36);
+        imageStack[36] = new ImageStack(box37);
+        imageStack[37] = new ImageStack(box38);
+        imageStack[38] = new ImageStack(box39);
+        imageStack[39] = new ImageStack(box40);
+        imageStack[40] = new ImageStack(box41);
+        imageStack[41] = new ImageStack(box42);
+        imageStack[42] = new ImageStack(box43);
+        imageStack[43] = new ImageStack(box44);
+        imageStack[44] = new ImageStack(box45);
+        imageStack[45] = new ImageStack(box46);
+        imageStack[46] = new ImageStack(box47);
+        imageStack[47] = new ImageStack(box48);
+        imageStack[48] = new ImageStack(box49);
+        imageStack[49] = new ImageStack(box50);
+        imageStack[50] = new ImageStack(box51);
+        imageStack[51] = new ImageStack(box52);
+        imageStack[52] = new ImageStack(box53);
+        imageStack[53] = new ImageStack(box54);
+        imageStack[54] = new ImageStack(box55);
+        imageStack[55] = new ImageStack(box56);
+        imageStack[56] = new ImageStack(box57);
+        imageStack[57] = new ImageStack(box58);
+        imageStack[58] = new ImageStack(box59);
+        imageStack[59] = new ImageStack(box60);
+        imageStack[60] = new ImageStack(box61);
+        imageStack[61] = new ImageStack(box62);
+        imageStack[62] = new ImageStack(box63);
+        imageStack[63] = new ImageStack(box64);
 	}
     @Override
     public void startGame() {
@@ -312,34 +308,32 @@ public class GraphicUI implements GameUI {
 	@Override
 	public void initRenderBoard(int[] squares, Player[] players) {
 		add();
-		this.players = players;
+		playersPiece = new PieceAdapter[players.length];
+		for(int i=0; i<playersPiece.length; i++) {
+		    playersPiece[i] = new PieceAdapter.PieceAdapterBuilder(players[i].getPiece()).build();
+        }
 		this.squares = squares;
 		for (int i = 0; i < squares.length; i++) {
 			if (squares[i] == Square.NORMAL_SQUARE) {
-
-			} else if (squares[i] == Square.NORMAL_SQUARE) {
 				// DO NOTHING
 			} else if (squares[i] == Square.LADDER_SQUARE) {
 				try {
-					boxes[i].setImage(
+                    imageStack[i].push(
 							new Image(new File("src/image_sl/ladder.png").toURI().toURL().toExternalForm()));
-					boxes[i].setVisible(true);
 				} catch (MalformedURLException e) {
 					e.printStackTrace();
 				}
 			} else if (squares[i] == Square.SNAKE_SQUARE) {
 				try {
-					boxes[i].setImage(
+                    imageStack[i].push(
 							new Image(new File("src/image_sl/snake.png").toURI().toURL().toExternalForm()));
-					boxes[i].setVisible(true);
 				} catch (MalformedURLException e) {
 					e.printStackTrace();
 				}
 			} else if (squares[i] == Square.FREEZE_SQUARE) {
 				try {
-					boxes[i].setImage(
+                    imageStack[i].push(
 							new Image(new File("src/image_sl/snowflake.png").toURI().toURL().toExternalForm()));
-					boxes[i].setVisible(true);
 				} catch (MalformedURLException e) {
 					e.printStackTrace();
 				}
@@ -347,29 +341,29 @@ public class GraphicUI implements GameUI {
 			} else if (squares[i] == Square.BACKWARD_SQUARE) {
 				try {
 					if(((i-1)/8)%2 == 0) {
-                        boxes[i].setImage(
+                        imageStack[i].push(
                                 new Image(new File("src/image_sl/backward.png").toURI().toURL().toExternalForm()));
                     } else {
-                        boxes[i].setImage(
+                        imageStack[i].push(
                                 new Image(new File("src/image_sl/backward-rotate.png").toURI().toURL().toExternalForm()));
                     }
-					boxes[i].setVisible(true);
 				} catch (MalformedURLException e) {
 					e.printStackTrace();
 				}
 
 			} else if (squares[i] == Square.GOAL_SQUARE) {
                 try {
-                    boxes[i].setImage(
+                    imageStack[i].push(
                             new Image(new File("src/image_sl/goal.png").toURI().toURL().toExternalForm()));
-                    boxes[i].setVisible(true);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
 			}
-
-			render();
 		}
+        for(PieceAdapter p : playersPiece) {
+            imageStack[0].push(p);
+        }
+        render();
 	}
 
 	@Override
@@ -380,6 +374,10 @@ public class GraphicUI implements GameUI {
 	@Override
 	public void focusPlayer(Player player) {
 		currentPlayer = player;
+        int pos = presenter.getPlayersPosition().get(currentPlayer);
+        int index = getPieceIndex(currentPlayer.getPiece());
+        imageStack[pos].focusImage(playersPiece[index]);
+        render();
 		setMessage(currentPlayer.getName() + "'s Turn");
 	}
 
@@ -403,19 +401,6 @@ public class GraphicUI implements GameUI {
 				handleDefaultAction();
 			}
 		});
-		// rollButton.setOnAction(new EventHandler<ActionEvent>() {
-		//
-		// @Override
-		// public void handle(ActionEvent event) {
-		//
-		// die.roll();
-		// int face = die.getFace();
-		// diceFace(face);
-		// setDefaultEvent();
-		// msgSet = false;
-		// }
-		// });
-
 	}
 
 	@Override
@@ -534,46 +519,35 @@ public class GraphicUI implements GameUI {
     }
 //	
 	private void render() {
-        Map<Player,Integer> pos = presenter.getPlayersPosition();
-//        for(int i=0; i<squares.length; i++) {
-//            List<String> names = new ArrayList<>();
-//            for(Player p: pos.keySet()) {
-//                if(pos.get(p) == i) {
-//                    if(p.equals(currentPlayer)) {
-//                        names.add(p.getName()+" <= Current Player.");
-//                    } else {
-//                        names.add(p.getName());
-//                    }
-//                }
-//            }
-//            if(names.size() == 0 && squares[i] == Square.NORMAL_SQUARE) {
-//                continue;
-//            }
-//            System.out.print("SQUARE "+(i+1));
-//            switch(squares[i]) {
-//                case Square.BACKWARD_SQUARE:
-//                    System.out.print("\tBACKWARD SQUARE");
-//                    break;
-//                case Square.FREEZE_SQUARE:
-//                    System.out.print("\tFREEZE SQUARE");
-//                    break;
-//                case Square.GOAL_SQUARE:
-//                    System.out.print("\tGOAL SQUARE");
-//                    break;
-//                case Square.LADDER_SQUARE:
-//                    System.out.print("\tLADDER SQUARE");
-//                    System.out.print("\tGoto: "+(i+1+presenter.getSquareMoves(i)));
-//                    break;
-//                case Square.SNAKE_SQUARE:
-//                    System.out.print("\tSNAKE SQUARE");
-//                    System.out.print("\tGoto: "+(i+1+presenter.getSquareMoves(i)));
-//                    break;
-//            }
-//            System.out.println();
-//            for(String name: names) {
-//                System.out.println("..."+name);
-//            }
-//        }
+	    int pos = presenter.getPlayersPosition().getOrDefault(currentPlayer,-1);
+	    if(pos >= 0) {
+            int index = getPieceIndex(currentPlayer.getPiece());
+            for (int i = 0; i < imageStack.length; i++) {
+                if (pos >= 0) {
+                    if (i != pos) {
+                        imageStack[i].remove(playersPiece[index]);
+                    } else if (!imageStack[i].contains(playersPiece[index]) && i == pos) {
+                        imageStack[i].push(playersPiece[index]);
+                    }
+                }
+                imageStack[i].renderImage();
+            }
+        } else {
+	        for(ImageStack i : imageStack) {
+	            i.renderImage();
+            }
+        }
+    }
+
+    private int getPieceIndex(Piece p) {
+        int index = -1;
+        for(int i=0; i<playersPiece.length; i++) {
+            if(p.equals(playersPiece[i].getPiece())) {
+                index = i;
+                break;
+            }
+        }
+        return index;
     }
 	
 	public void initialize(){
@@ -582,7 +556,7 @@ public class GraphicUI implements GameUI {
         replayImg.setVisible(false);
         exitImg.setVisible(false);
 	    // Just for debugging!
-		creator = new GameInfo.GameCreator().addPlayer("Sept").addPlayer("Guitar").addPlayer("Mai")
+		creator = new GameInfo.GameCreator().addPlayer("Sept",1).addPlayer("Guitar",2).addPlayer("Mai",3)
                 .snake(4).ladder(4).backward(4).freeze(4);
 		newGame();
         startGame();
