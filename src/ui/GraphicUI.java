@@ -60,15 +60,6 @@ public class GraphicUI implements GameUI {
 	private Button exitBtn;
 
 	@FXML
-	private ImageView newgameImg;
-
-	@FXML
-	private ImageView replayImg;
-
-	@FXML
-	private ImageView exitImg;
-
-	@FXML
 	private AnchorPane endgameBG;
 
 	@FXML
@@ -455,9 +446,6 @@ public class GraphicUI implements GameUI {
 	private void setPopup(boolean show) {
         background.setVisible(show);
         endgameBG.setVisible(show);
-        newgameImg.setVisible(show);
-        replayImg.setVisible(show);
-        exitImg.setVisible(show);
         winnerImg.setVisible(show);
     }
 
@@ -568,9 +556,6 @@ public class GraphicUI implements GameUI {
 	
 	public void initialize(){
         endgameBG.setVisible(false);
-        newgameImg.setVisible(false);
-        replayImg.setVisible(false);
-        exitImg.setVisible(false);
 	}
 
 	public void createBackwardImages() {
