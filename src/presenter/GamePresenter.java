@@ -26,18 +26,18 @@ public class GamePresenter {
                 ui.roll();
                 break;
             case "lucky_roll":
-                ui.setMessage("LUCKY! You can roll the dice one more time.");
+                ui.setMessage("LUCKY!\nYou can roll the dice one more time.");
                 ui.roll();
                 break;
             case "backward_roll":
-                ui.setMessage("Unfortunately, you are on the backward square.");
+                ui.setMessage("Unfortunately,\nyou are on the backward square.");
                 ui.roll();
                 break;
             case "set_freeze":
-                ui.setMessage("Unfortunately, you are on the freeze square.");
+                ui.setMessage("Unfortunately,\nyou are on the freeze square.");
                 break;
             case "un_freeze":
-                ui.setMessage("You is frozen, please play come again next turn.");
+                ui.setMessage("You is frozen,\nplease play come again next turn.");
                 break;
         }
 

@@ -10,12 +10,21 @@ import game.Square;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import presenter.GameInfo;
 import presenter.GamePresenter;
 
@@ -61,12 +70,6 @@ public class GraphicUI implements GameUI {
 
 	@FXML
 	private AnchorPane endgameBG;
-
-	@FXML
-	private TextField playerName;
-
-	@FXML
-	private TextField playerNum;
 
 	@FXML
 	private ImageView background;
@@ -389,6 +392,8 @@ public class GraphicUI implements GameUI {
 		dice5.setVisible(false);
 		dice6.setVisible(false);
 		rollButton.setText("Roll");
+		Background bg = new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY));
+		rollButton.setBackground(bg);
 		setMessage("Click to roll the dice...", true);
 		rollButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -409,7 +414,7 @@ public class GraphicUI implements GameUI {
 	public void setMessage(String message, boolean append) {
 		msgSet = true;
 		if (append) {
-			this.message.setText(this.message.getText() + "\n" + message);
+			this.message.setText(this.message.getText() + "\n\n" + message);
 		} else {
 			this.message.setText(message);
 		}
@@ -424,6 +429,8 @@ public class GraphicUI implements GameUI {
 	public void gameEnded(Player winner) {
 		theWinner = winner.getName();
 		setMessage("Winner is " + theWinner + "!");
+		Background bg = new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY));
+		rollButton.setBackground(bg);
 		rollButton.setText("Options");
 		rollButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -457,12 +464,19 @@ public class GraphicUI implements GameUI {
         newgameBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                setPopup(false);
-                currentPlayer = null;
                 setDefaultEvent();
-                rollButton.setText("Start");
-                setMessage("New Game");
-                newGame();
+            	try {
+        			Parent root = FXMLLoader.load(getClass().getResource("Begin.fxml"));
+        			Stage stage = new Stage();
+        			Scene scene = new Scene(root);
+        			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+        			stage.setScene(scene);
+        			stage.show();
+        			Stage newGame = (Stage) newgameBtn.getScene().getWindow();
+        			newGame.close();
+        		} catch (Exception e) {
+        			e.printStackTrace();
+        		}
             }
         });
 
@@ -472,6 +486,8 @@ public class GraphicUI implements GameUI {
                 setPopup(false);
                 currentPlayer = null;
                 setDefaultEvent();
+                Background bg = new Background(new BackgroundFill(Color.GREENYELLOW, CornerRadii.EMPTY, Insets.EMPTY));
+        		rollButton.setBackground(bg);
                 rollButton.setText("Start");
                 setMessage("Replay Game");
                 presenter.replay();
@@ -521,7 +537,7 @@ public class GraphicUI implements GameUI {
             dice6.setVisible(true);
         }
     }
-//	
+	
 	private void render() {
 	    int pos = presenter.getPlayersPosition().getOrDefault(currentPlayer,-1);
 	    if(pos >= 0) {
@@ -574,6 +590,8 @@ public class GraphicUI implements GameUI {
 	private void handleDefaultAction() {
 		while (true) {
 			rollButton.setText("Next");
+			Background bg = new Background(new BackgroundFill(Color.BEIGE, CornerRadii.EMPTY, Insets.EMPTY));
+			rollButton.setBackground(bg);
 			presenter.next();
 			if (msgSet) {
 				msgSet = false;

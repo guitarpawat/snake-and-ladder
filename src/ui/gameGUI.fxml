@@ -17,7 +17,7 @@
             <Image url="@../image_sl/newboardPNG.png" />
          </image>
       </ImageView>
-      <Button fx:id="rollButton" layoutX="647.0" layoutY="489.0" mnemonicParsing="false" onAction="#roll" prefHeight="86.0" prefWidth="197.0" text="Play">
+      <Button fx:id="rollButton" layoutX="646.0" layoutY="474.0" mnemonicParsing="false" onAction="#roll" prefHeight="86.0" prefWidth="197.0" text="Play">
          <font>
             <Font name="Impact" size="37.0" />
          </font>
@@ -29,9 +29,9 @@
             </GaussianBlur>
          </effect>
       </Button>
-      <Label fx:id="message" alignment="CENTER" layoutX="595.0" layoutY="217.0" prefHeight="238.0" prefWidth="298.0">
+      <Label fx:id="message" alignment="CENTER" layoutX="596.0" layoutY="247.0" prefHeight="181.0" prefWidth="298.0">
          <font>
-            <Font name="Impact" size="15.0" />
+            <Font name="Impact" size="17.0" />
          </font></Label>
       <ImageView fx:id="dice1" fitHeight="150.0" fitWidth="200.0" layoutX="670.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
@@ -132,7 +132,7 @@
       <ImageView fx:id="box22" fitHeight="50.0" fitWidth="70.0" layoutX="363.0" layoutY="397.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="box12" fitHeight="50.0" fitWidth="70.0" layoutX="291.0" layoutY="474.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="box13" fitHeight="50.0" fitWidth="70.0" layoutX="218.0" layoutY="474.0" pickOnBounds="true" preserveRatio="true" />
-      <AnchorPane fx:id="endgameBG" layoutX="179.0" layoutY="47.0" prefHeight="497.0" prefWidth="520.0">
+      <AnchorPane fx:id="endgameBG" layoutX="179.0" layoutY="47.0" prefHeight="497.0" prefWidth="520.0" visible="false">
          <children>
             <ImageView fx:id="background" fitHeight="498.0" fitWidth="562.0" layoutX="-2.0" layoutY="-1.0" pickOnBounds="true">
                <image>
