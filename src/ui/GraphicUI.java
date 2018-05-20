@@ -231,9 +231,10 @@ public class GraphicUI implements GameUI {
 	private boolean msgSet = false;
 	private int lastFace = 0;
 	private String theWinner;
-	private ImageStack[] imageStack = new ImageStack[64];
+	private ImageStack[] imageStack;
 
 	public void add() {
+	    imageStack = new ImageStack[64];
         imageStack[0] = new ImageStack(box1);
         imageStack[1] = new ImageStack(box2);
         imageStack[2] = new ImageStack(box3);
@@ -307,7 +308,13 @@ public class GraphicUI implements GameUI {
 
 	@Override
 	public void initRenderBoard(int[] squares, Player[] players) {
-		add();
+	    if(imageStack == null) {
+            add();
+        } else {
+	        for(int i=0; i<imageStack.length; i++) {
+	            imageStack[i].clear();
+            }
+        }
 		playersPiece = new PieceAdapter[players.length];
 		for(int i=0; i<playersPiece.length; i++) {
 		    playersPiece[i] = new PieceAdapter.PieceAdapterBuilder(players[i].getPiece()).build();
@@ -418,7 +425,7 @@ public class GraphicUI implements GameUI {
 	}
 
 	public void newGame() {
-		presenter = new GamePresenter(this, creator.build());
+		presenter.newGame();
 		startGame();
 	}
 
@@ -460,12 +467,10 @@ public class GraphicUI implements GameUI {
         winnerName.setText(theWinner);
 
         newgameBtn.setOnAction(new EventHandler<ActionEvent>() {
-
             @Override
             public void handle(ActionEvent event) {
                 setPopup(false);
                 currentPlayer = null;
-                System.out.println("replay");
                 setDefaultEvent();
                 rollButton.setText("Start");
                 setMessage("New Game");
@@ -474,16 +479,21 @@ public class GraphicUI implements GameUI {
         });
 
         replayBtn.setOnAction(new EventHandler<ActionEvent>() {
-
             @Override
             public void handle(ActionEvent event) {
                 setPopup(false);
                 currentPlayer = null;
-                System.out.println("replay");
                 setDefaultEvent();
                 rollButton.setText("Start");
                 setMessage("Replay Game");
                 presenter.replay();
+            }
+        });
+
+        exitBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.exit(0);
             }
         });
 	}
@@ -492,6 +502,12 @@ public class GraphicUI implements GameUI {
 	public void diceFace(int face) {
 		lastFace = face;
 	}
+
+	public void setCreator(GameInfo.GameCreator creator) {
+	    this.creator = creator;
+	    presenter = new GamePresenter(this,creator.build());
+        startGame();
+    }
 
 	private void showFace() {
         dice.setVisible(false);
@@ -555,11 +571,6 @@ public class GraphicUI implements GameUI {
         newgameImg.setVisible(false);
         replayImg.setVisible(false);
         exitImg.setVisible(false);
-	    // Just for debugging!
-		creator = new GameInfo.GameCreator().addPlayer("Sept",1).addPlayer("Guitar",2).addPlayer("Mai",3)
-                .snake(4).ladder(4).backward(4).freeze(4);
-		newGame();
-        startGame();
 	}
 
 	public void createBackwardImages() {

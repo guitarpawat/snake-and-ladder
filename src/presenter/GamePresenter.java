@@ -82,4 +82,8 @@ public class GamePresenter {
     public void replay() {
         game.replay();
     }
+
+    public void newGame() {
+        game.newGame();
+    }
 }
