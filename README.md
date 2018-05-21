@@ -7,4 +7,4 @@ _This project is the part of 01219243 Software Specification and Design course a
 1. 5910545744 Pawat     Nakpiphatkul
 
 ## More information
-For more information please see our [project's wiki page](/wiki).
+For more information please see our [project's wiki page](https://github.com/guitarpawat/snake-and-ladder/wiki).
