@@ -13,7 +13,7 @@ _This project is the part of 01219243 Software Specification and Design course a
 1. Snake Square – Makes you go backward.
 1. Freeze Square – You will become unmovable for next one turn.
 1. Backward Square – You will move backward as the dice face.
-1. Goal Square – If you can reach here, youv win!
+1. Goal Square – If you can reach here, you win!
 
 ### Lucky Roll
 If you roll and get dice face 6, you can roll one more time!
