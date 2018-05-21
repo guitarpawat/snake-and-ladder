@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Board {
 
-    public static final int SIZE = 64;
+    public static final int DEFAULT_SIZE = 64;
 
 
     private Square[] squares;
@@ -42,7 +42,7 @@ public class Board {
         return -1;
     }
 
-    public boolean pieceIsAtGoal(Piece piece) {
+    public boolean isPieceAtGoal(Piece piece) {
         return squares[getPiecePosition(piece)].getSquareStatus() == Square.GOAL_SQUARE;
     }
 
@@ -96,7 +96,7 @@ public class Board {
         private Random random = new Random();
 
         public BoardBuilder() {
-            this(Board.SIZE);
+            this(Board.DEFAULT_SIZE);
         }
 
         public BoardBuilder(int size) {

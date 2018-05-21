@@ -383,7 +383,7 @@ public class Game {
             addDataOrDefault("state","check");
             addDataOrDefault("player",currentPlayer());
             Piece current = currentPlayerPiece();
-            if(board.pieceIsAtGoal(current)) {
+            if(board.isPieceAtGoal(current)) {
                 next = new GameEndedState(data);
             } else if(board.isOnFreezeSquare(current)) {
                 next = new SetFreezeState(data);

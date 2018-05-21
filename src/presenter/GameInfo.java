@@ -3,7 +3,6 @@ package presenter;
 import game.Board;
 import game.Game;
 import game.Player;
-import javafx.scene.paint.Color;
 
 import java.util.*;
 
@@ -40,7 +39,7 @@ public class GameInfo {
         private int num_player = 1;
 
         public GameCreator() {
-            this(Board.SIZE);
+            this(Board.DEFAULT_SIZE);
         }
 
         public GameCreator(int size) {

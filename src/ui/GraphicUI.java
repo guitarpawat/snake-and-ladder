@@ -322,20 +322,20 @@ public class GraphicUI implements GameUI {
 			if (squares[i] == Square.NORMAL_SQUARE) {
 				// DO NOTHING
 			} else if (squares[i] == Square.LADDER_SQUARE) {
-                imageStack[i].push(new Image("/ladder.png"));
+                imageStack[i].push(new Image("/image_sl/ladder.png"));
 			} else if (squares[i] == Square.SNAKE_SQUARE) {
-                imageStack[i].push(new Image("/snake.png"));
+                imageStack[i].push(new Image("/image_sl/snake.png"));
 			} else if (squares[i] == Square.FREEZE_SQUARE) {
-                imageStack[i].push(new Image("/snowflake.png"));
+                imageStack[i].push(new Image("/image_sl/snowflake.png"));
 			} else if (squares[i] == Square.BACKWARD_SQUARE) {
                 if(((i-1)/8)%2 == 0) {
-                    imageStack[i].push(new Image("/backward.png"));
+                    imageStack[i].push(new Image("/image_sl/backward.png"));
                 } else {
-                    imageStack[i].push(new Image("/backward-rotate.png"));
+                    imageStack[i].push(new Image("/image_sl/backward-rotate.png"));
                 }
 
             } else if (squares[i] == Square.GOAL_SQUARE) {
-                imageStack[i].push(new Image("/goal.png"));
+                imageStack[i].push(new Image("/image_sl/goal.png"));
 			}
 		}
         for(PieceAdapter p : playersPiece) {
