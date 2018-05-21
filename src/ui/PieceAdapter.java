@@ -30,10 +30,10 @@ public class PieceAdapter extends Image {
     public static class PieceAdapterBuilder {
         private String img;
         private Piece piece;
-        private static final String style1 = "/image_sl/player-yellow.png";
-        private static final String style2 = "/image_sl/player-blue.png";
-        private static final String style3 = "/image_sl/player-green.png";
-        private static final String style4 = "/image_sl/player-purple.png";
+        private static final String style1 = "image_sl/player-yellow.png";
+        private static final String style2 = "image_sl/player-blue.png";
+        private static final String style3 = "image_sl/player-green.png";
+        private static final String style4 = "image_sl/player-purple.png";
 
         public PieceAdapterBuilder(Piece piece) {
             int style = piece.getStyle();

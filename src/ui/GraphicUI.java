@@ -319,24 +319,24 @@ public class GraphicUI implements GameUI {
         }
 		this.squares = squares;
 		for (int i = 0; i < squares.length; i++) {
-			if (squares[i] == Square.NORMAL_SQUARE) {
-				// DO NOTHING
-			} else if (squares[i] == Square.LADDER_SQUARE) {
-                imageStack[i].push(new Image("/image_sl/ladder.png"));
-			} else if (squares[i] == Square.SNAKE_SQUARE) {
-                imageStack[i].push(new Image("/image_sl/snake.png"));
-			} else if (squares[i] == Square.FREEZE_SQUARE) {
-                imageStack[i].push(new Image("/image_sl/snowflake.png"));
-			} else if (squares[i] == Square.BACKWARD_SQUARE) {
-                if(((i-1)/8)%2 == 0) {
-                    imageStack[i].push(new Image("/image_sl/backward.png"));
+            if (squares[i] == Square.NORMAL_SQUARE) {
+                // DO NOTHING
+            } else if (squares[i] == Square.LADDER_SQUARE) {
+                imageStack[i].push(new Image(getClass().getResourceAsStream("/image_sl/ladder.png")));
+            } else if (squares[i] == Square.SNAKE_SQUARE) {
+                imageStack[i].push(new Image(getClass().getResourceAsStream("/image_sl/snake.png")));
+            } else if (squares[i] == Square.FREEZE_SQUARE) {
+                imageStack[i].push(new Image(getClass().getResourceAsStream("/image_sl/snowflake.png")));
+            } else if (squares[i] == Square.BACKWARD_SQUARE) {
+                if (((i - 1) / 8) % 2 == 0) {
+                    imageStack[i].push(new Image(getClass().getResourceAsStream("/image_sl/backward.png")));
                 } else {
-                    imageStack[i].push(new Image("/image_sl/backward-rotate.png"));
+                    imageStack[i].push(new Image(getClass().getResourceAsStream("/image_sl/backward-rotate.png")));
                 }
 
             } else if (squares[i] == Square.GOAL_SQUARE) {
-                imageStack[i].push(new Image("/image_sl/goal.png"));
-			}
+                imageStack[i].push(new Image(getClass().getResourceAsStream("/image_sl/goal.png")));
+            }
 		}
         for(PieceAdapter p : playersPiece) {
             imageStack[0].push(p);
@@ -549,10 +549,6 @@ public class GraphicUI implements GameUI {
 	
 	public void initialize(){
         endgameBG.setVisible(false);
-	}
-
-	public void createBackwardImages() {
-
 	}
 
 	private void setDefaultEvent() {
