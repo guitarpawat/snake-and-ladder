@@ -28,24 +28,7 @@ public class ImageStack extends Stack<Image> {
         }
     }
 
-    public ImageView getImageView() {
+    public ImageView getView() {
         return imageView;
     }
-
-//    @Override
-//    public boolean remove(Object img) {
-//        List<Image> images = new ArrayList<>();
-//        while(!empty()) {
-//            Image latest = pop();
-//            if(latest.equals(img)) {
-//                break;
-//            }
-//            images.add(latest);
-//        }
-//        while(!images.isEmpty()) {
-//            push(images.get(images.size()-1));
-//            images.remove(peek());
-//        }
-//        return true;
-//    }
 }
