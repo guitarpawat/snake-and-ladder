@@ -1,7 +1,5 @@
 package game;
 
-import javafx.scene.paint.Color;
-
 public class Player {
 
     private String name;

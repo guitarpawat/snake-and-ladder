@@ -1,12 +1,14 @@
 package ui;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Map;
 
 import game.Piece;
 import game.Player;
 import game.Square;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -27,6 +29,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import presenter.GameInfo;
 import presenter.GamePresenter;
+
+import javax.imageio.ImageIO;
 
 public class GraphicUI implements GameUI {
 	@FXML
@@ -318,47 +322,20 @@ public class GraphicUI implements GameUI {
 			if (squares[i] == Square.NORMAL_SQUARE) {
 				// DO NOTHING
 			} else if (squares[i] == Square.LADDER_SQUARE) {
-				try {
-                    imageStack[i].push(
-							new Image(new File("src/image_sl/ladder.png").toURI().toURL().toExternalForm()));
-				} catch (MalformedURLException e) {
-					e.printStackTrace();
-				}
+                imageStack[i].push(new Image("/ladder.png"));
 			} else if (squares[i] == Square.SNAKE_SQUARE) {
-				try {
-                    imageStack[i].push(
-							new Image(new File("src/image_sl/snake.png").toURI().toURL().toExternalForm()));
-				} catch (MalformedURLException e) {
-					e.printStackTrace();
-				}
+                imageStack[i].push(new Image("/snake.png"));
 			} else if (squares[i] == Square.FREEZE_SQUARE) {
-				try {
-                    imageStack[i].push(
-							new Image(new File("src/image_sl/snowflake.png").toURI().toURL().toExternalForm()));
-				} catch (MalformedURLException e) {
-					e.printStackTrace();
-				}
-
+                imageStack[i].push(new Image("/snowflake.png"));
 			} else if (squares[i] == Square.BACKWARD_SQUARE) {
-				try {
-					if(((i-1)/8)%2 == 0) {
-                        imageStack[i].push(
-                                new Image(new File("src/image_sl/backward.png").toURI().toURL().toExternalForm()));
-                    } else {
-                        imageStack[i].push(
-                                new Image(new File("src/image_sl/backward-rotate.png").toURI().toURL().toExternalForm()));
-                    }
-				} catch (MalformedURLException e) {
-					e.printStackTrace();
-				}
-
-			} else if (squares[i] == Square.GOAL_SQUARE) {
-                try {
-                    imageStack[i].push(
-                            new Image(new File("src/image_sl/goal.png").toURI().toURL().toExternalForm()));
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
+                if(((i-1)/8)%2 == 0) {
+                    imageStack[i].push(new Image("/backward.png"));
+                } else {
+                    imageStack[i].push(new Image("/backward-rotate.png"));
                 }
+
+            } else if (squares[i] == Square.GOAL_SQUARE) {
+                imageStack[i].push(new Image("/goal.png"));
 			}
 		}
         for(PieceAdapter p : playersPiece) {

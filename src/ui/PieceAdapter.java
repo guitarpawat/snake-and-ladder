@@ -1,9 +1,13 @@
 package ui;
 
 import game.Piece;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 
+import javax.imageio.ImageIO;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 
 public class PieceAdapter extends Image {
@@ -24,35 +28,31 @@ public class PieceAdapter extends Image {
     }
 
     public static class PieceAdapterBuilder {
-        private String url;
+        private String img;
         private Piece piece;
-        private static final String style1 = "src/image_sl/player-yellow.png";
-        private static final String style2 = "src/image_sl/player-blue.png";
-        private static final String style3 = "src/image_sl/player-green.png";
-        private static final String style4 = "src/image_sl/player-purple.png";
+        private static final String style1 = "/player-yellow.png";
+        private static final String style2 = "/player-blue.png";
+        private static final String style3 = "/player-green.png";
+        private static final String style4 = "/player-purple.png";
 
         public PieceAdapterBuilder(Piece piece) {
             int style = piece.getStyle();
             this.piece = piece;
-            try {
-                if(style == 1) {
-                    url =  new File(style1).toURI().toURL().toExternalForm();
-                } else if(style == 2) {
-                    url =  new File(style2).toURI().toURL().toExternalForm();
-                } else if(style == 3) {
-                    url =  new File(style3).toURI().toURL().toExternalForm();
-                } else if(style == 4) {
-                    url =  new File(style4).toURI().toURL().toExternalForm();
-                } else {
-                    throw new IllegalArgumentException("The style number must be 1 to 4");
-                }
-            } catch(MalformedURLException e) {
-                e.printStackTrace();
+            if(style == 1) {
+                img = style1;
+            } else if(style == 2) {
+                img = style2;
+            } else if(style == 3) {
+                img = style3;
+            } else if(style == 4) {
+                img = style4;
+            } else {
+                throw new IllegalArgumentException("The style number must be 1 to 4");
             }
         }
 
         public PieceAdapter build() {
-            return new PieceAdapter(piece, url);
+            return new PieceAdapter(piece, img);
         }
     }
 }
