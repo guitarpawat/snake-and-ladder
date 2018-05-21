@@ -58,16 +58,8 @@ public class Game {
         }
     }
 
-    public String currentPlayerName() {
-        return currentPlayer().getName();
-    }
-
     public Piece currentPlayerPiece() {
         return currentPlayer().getPiece();
-    }
-
-    public int currentPlayerPosition() {
-        return board.getPiecePosition(currentPlayer().getPiece());
     }
 
     public void replay() {

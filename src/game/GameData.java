@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class GameData {
 
-    Map<String,Object> data;
+    private Map<String,Object> data;
 
     public GameData() {
         data = new HashMap<>();
