@@ -7,7 +7,7 @@ public class Game {
 
     private Player[] players;
     private Die die = new Die();
-    private Board board = new Board.BoardBuilder().build();
+    private Board board;
     private int currentPlayerIndex;
     private State state;
 
